@@ -1,13 +1,12 @@
 package cz.cvut.fel.omo.smartHome.model.activity;
 
-import com.sun.jdi.ClassType;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 
 public class Activity {
     private String description;
-    private String creatureType;
+    private Class<? extends Creature> creatureType;
 
-    public Activity(String description, String creatureType) {
+    public Activity(String description, Class<? extends Creature> creatureType) {
         this.description = description;
         this.creatureType = creatureType;
     }
@@ -16,7 +15,7 @@ public class Activity {
         return description;
     }
 
-    public String getCreatureType() {
+    public Class<? extends Creature> getCreatureType() {
         return creatureType;
     }
 }

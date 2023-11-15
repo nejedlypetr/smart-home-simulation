@@ -1,9 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
-import cz.cvut.fel.omo.smartHome.model.creature.Adult;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
-import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Dog;
 import cz.cvut.fel.omo.smartHome.model.devices.Phone;
 import cz.cvut.fel.omo.smartHome.model.devices.TV;
@@ -38,8 +36,8 @@ public class RoomBuilder {
 
     public RoomBuilder withActivities() {
         this.activities = new ArrayList<>(Arrays.asList(
-            new Activity(" is sleeping.", Dog.class.toString()),
-            new Activity(" is eating.", Baby.class.toString())
+            new Activity(" is sleeping.", Dog.class),
+            new Activity(" is eating.", Baby.class)
         ));
         return this;
     }
