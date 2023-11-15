@@ -1,7 +1,15 @@
 package cz.cvut.fel.omo.smartHome.model.creature;
 
-public class Cat extends Animal {
+import java.util.Random;
 
+public class Cat extends Creature {
+
+    private Random random;
+
+    public Cat(String name) {
+        super(name);
+        random = new Random();
+    }
 
     public void sleep() {
 
@@ -15,13 +23,25 @@ public class Cat extends Animal {
 
     }
 
+    @Override
     public void findActivity() {
-//        int x = randomInt;
-        int x = 3;
-        switch (x) {
-            case 1: sleep();
-            case 2: meow();
-            case 3: eat();
+        int num = random.nextInt(5);
+        switch (num) {
+            case 0:
+                eat();
+                break;
+            case 1:
+                meow();
+                break;
+            case 2:
+                sleep();
+            default:
+                System.out.println("Invalid random number");
         }
+    }
+
+    @Override
+    public void generateEvent() {
+
     }
 }

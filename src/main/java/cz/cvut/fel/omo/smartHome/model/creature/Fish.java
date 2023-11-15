@@ -1,7 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.creature;
 
-public class Child extends Creature {
-    public Child(String name) {
+public class Fish extends Creature {
+    public Fish(String name) {
         super(name);
     }
 
