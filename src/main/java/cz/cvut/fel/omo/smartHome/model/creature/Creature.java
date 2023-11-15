@@ -27,6 +27,6 @@ public abstract class Creature {
 
     @Override
     public String toString() {
-        return this.getName() + "(" + this.getClass().getName() + ")";
+        return this.getClass().getSimpleName() + " " + this.getName() + " ";
     }
 }

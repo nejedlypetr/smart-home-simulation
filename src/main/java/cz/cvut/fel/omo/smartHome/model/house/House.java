@@ -27,7 +27,7 @@ public class House {
 
     private Activity getRandomActivityFor(Creature creature) {
         Floor floor = RandomListElementPicker.pickRandomElement(floors);
-        System.out.print(creature + "is in " + floor.getName() + ".");
+        System.out.print(creature + "is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
     }
 }

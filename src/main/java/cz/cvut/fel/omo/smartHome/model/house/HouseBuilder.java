@@ -4,6 +4,8 @@ import cz.cvut.fel.omo.smartHome.model.creature.Adult;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Child;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.usable.Bicycle;
+import cz.cvut.fel.omo.smartHome.model.usable.Ski;
 import cz.cvut.fel.omo.smartHome.model.usable.SportEquipment;
 
 import java.util.ArrayList;
@@ -55,34 +57,13 @@ public class HouseBuilder {
     public HouseBuilder withFloors() {
         Floor floor1 = new FloorBuilder()
             .withName("First floor")
-            .withRooms(Arrays.asList(
-                new Room("Living room")
-                    .withDevices(Arrays.asList(
-                        new TV(),
-                        new Phone(),
-                        new Radio()
-                    )),
-                new Room("Kitchen")
-                    .withDevices(Arrays.asList(
-                        new Fridge(),
-                        new Dishwasher()
-                    ))
-            ));
+            .withRooms()
+            .build();
 
         Floor floor2 = new FloorBuilder()
             .withName("Second floor")
-            .withRooms(Arrays.asList(
-                new Room("Children's room")
-                    .withDevices(Arrays.asList(
-                        new Phone(),
-                        new Radio()
-                    )),
-                new Room("Parent's bedroom")
-                    .withDevices(Arrays.asList(
-                        new TV(),
-                        new Radio()
-                    ))
-            ));
+            .withRooms()
+            .build();
 
         this.floors = new ArrayList<>(Arrays.asList(floor1, floor2));
         return this;

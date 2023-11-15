@@ -43,6 +43,7 @@ public class Simulation {
     }
 
     private void printCurrentTimeInfo() {
+        System.out.println();
         System.out.println("======= Day " + day + ", time: " + hour + ":00 =======");
     }
 }
