@@ -41,4 +41,7 @@ public class Room {
         this.activities = activities;
     }
 
+    public List<Device> getDevices() {
+        return devices;
+    }
 }
