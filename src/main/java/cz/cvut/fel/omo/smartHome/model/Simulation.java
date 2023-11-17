@@ -46,4 +46,8 @@ public class Simulation {
         System.out.println();
         System.out.println("======= Day " + day + ", time: " + hour + ":00 =======");
     }
+
+    public House getHouse() {
+        return house;
+    }
 }

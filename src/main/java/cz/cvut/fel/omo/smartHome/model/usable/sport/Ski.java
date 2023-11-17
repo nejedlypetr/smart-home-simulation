@@ -10,4 +10,9 @@ public class Ski extends SportEquipment{
     public void repair() {
 
     }
+
+    @Override
+    public void breakUsable() {
+
+    }
 }

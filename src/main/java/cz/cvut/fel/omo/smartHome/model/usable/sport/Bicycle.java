@@ -10,4 +10,9 @@ public class Bicycle extends SportEquipment {
     public void repair() {
 
     }
+
+    @Override
+    public void breakUsable() {
+
+    }
 }

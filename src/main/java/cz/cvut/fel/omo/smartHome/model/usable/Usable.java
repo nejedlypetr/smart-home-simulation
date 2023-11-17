@@ -5,4 +5,6 @@ public interface Usable {
     void use();
 
     void repair();
+
+    void breakUsable();
 }
