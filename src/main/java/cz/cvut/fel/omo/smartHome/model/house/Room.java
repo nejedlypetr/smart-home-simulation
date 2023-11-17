@@ -2,7 +2,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
-import cz.cvut.fel.omo.smartHome.model.usable.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.List;

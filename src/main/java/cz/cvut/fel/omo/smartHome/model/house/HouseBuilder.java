@@ -4,9 +4,9 @@ import cz.cvut.fel.omo.smartHome.model.creature.Adult;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Child;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
-import cz.cvut.fel.omo.smartHome.model.usable.Bicycle;
-import cz.cvut.fel.omo.smartHome.model.usable.Ski;
-import cz.cvut.fel.omo.smartHome.model.usable.SportEquipment;
+import cz.cvut.fel.omo.smartHome.model.usable.sport.Bicycle;
+import cz.cvut.fel.omo.smartHome.model.usable.sport.Ski;
+import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
