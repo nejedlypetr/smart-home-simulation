@@ -36,8 +36,8 @@ public class RoomBuilder {
 
     public RoomBuilder withActivities() {
         this.activities = new ArrayList<>(Arrays.asList(
-            new Activity(" is sleeping.", Dog.class.toString()),
-            new Activity(" is eating.", Baby.class.toString())
+            new Activity(" is sleeping.", Dog.class),
+            new Activity(" is eating.", Baby.class)
         ));
         return this;
     }
