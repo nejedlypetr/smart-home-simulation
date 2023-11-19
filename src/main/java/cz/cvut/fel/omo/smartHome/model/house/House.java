@@ -17,7 +17,7 @@ public class House {
     private final List<SportEquipment> sportEquipments;
     private List<Floor> floors;
     private final WeatherStationFacade weatherStation;
-    private final DeviceIterator deviceIterator;
+    private DeviceIterator deviceIterator;
     private double roundConsumption = 0;
     private double totalConsumption = 0;
 
@@ -26,10 +26,16 @@ public class House {
         this.sportEquipments = sportEquipments;
         this.floors = floors;
         weatherStation = new WeatherStationFacade();
+    }
+
+    public void initIterator() {
         deviceIterator = new DeviceIterator(this);
     }
 
     public void simulateNextStep() {
+        if (deviceIterator == null) {
+            initIterator();
+        }
         roundConsumption = 0;
         weatherStation.getWeatherReport();
         for (Creature creature : creatures) {
@@ -45,7 +51,7 @@ public class House {
             Device device = deviceIterator.next();
             roundConsumption += device.update();
         }
-        System.out.println(roundConsumption/1000 + " kWh of electricity consumed this round.");
+        System.out.println(roundConsumption + " Wh of electricity consumed this round.");
         totalConsumption += roundConsumption;
     }
 

@@ -15,7 +15,7 @@ public abstract class Device implements Usable {
     public int update() {
         if (usedThisTurn) {
             usedThisTurn = false;
-            return 0;
+            return electricityConsumption;
         } else {
             if (state == DeviceState.ACTIVE) {
                 lifespan--;
