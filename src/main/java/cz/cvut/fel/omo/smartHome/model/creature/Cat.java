@@ -1,47 +1,22 @@
 package cz.cvut.fel.omo.smartHome.model.creature;
 
+import cz.cvut.fel.omo.smartHome.model.event.Event;
+
+import java.util.List;
 import java.util.Random;
 
 public class Cat extends Creature {
 
-    private Random random;
-
     public Cat(String name) {
         super(name);
-        random = new Random();
-    }
-
-    public void sleep() {
-
-    }
-
-    public void meow() {
-
-    }
-
-    public void eat() {
-
     }
 
     @Override
-    public void findActivity() {
-        int num = random.nextInt(5);
-        switch (num) {
-            case 0:
-                eat();
-                break;
-            case 1:
-                meow();
-                break;
-            case 2:
-                sleep();
-            default:
-                System.out.println("Invalid random number");
-        }
-    }
-
-    @Override
-    public void generateEvent() {
-
+    public Decision makeDecision(List<Event> events) {
+        int decision = new Random().nextInt(2);
+        return switch (decision) {
+            case 1 -> Decision.EVENT;
+            default -> Decision.ACTIVITY;
+        };
     }
 }

@@ -1,6 +1,9 @@
 package cz.cvut.fel.omo.smartHome.model.creature;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
+import cz.cvut.fel.omo.smartHome.model.event.Event;
+
+import java.util.List;
 
 public abstract class Creature {
     private String name;
@@ -17,12 +20,8 @@ public abstract class Creature {
         System.out.println(name + activity.getDescription());
     }
 
-    public void findActivity() {
-        System.out.println("Find activity error.");
-    }
-
-    public void generateEvent() {
-        System.out.println("Generate activity error.");
+    public Decision makeDecision(List<Event> events) {
+        throw new UnsupportedOperationException("Method is not implemented in the subclass.");
     }
 
     @Override
