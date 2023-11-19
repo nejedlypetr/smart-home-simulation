@@ -14,7 +14,7 @@ public class Dog extends Creature {
     public Decision makeDecision(List<Event> events) {
         int decision = new Random().nextInt(2);
         return switch (decision) {
-            case 1 -> Decision.EVENT;
+            case 1 -> Decision.GENERATE_EVENT;
             default -> Decision.ACTIVITY;
         };
     }

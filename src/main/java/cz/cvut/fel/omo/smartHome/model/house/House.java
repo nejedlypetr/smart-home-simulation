@@ -59,8 +59,13 @@ public class House {
 
     private void handleDecision(Creature creature, Decision decision) {
         switch (decision) {
-            case EVENT -> {
+            case HANDLE_EVENT -> {
                 // todo
+                System.out.print("\n" + creature + "is handling an EVENT.");
+            }
+            case GENERATE_EVENT -> {
+                // todo - pick floor, room
+
                 System.out.print("\n" + creature + "is creating an EVENT.");
             }
             case DEVICE -> {

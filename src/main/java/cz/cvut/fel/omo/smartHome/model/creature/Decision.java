@@ -4,5 +4,6 @@ public enum Decision {
     DEVICE,
     SPORT_DEVICE,
     ACTIVITY,
-    EVENT
+    GENERATE_EVENT,
+    HANDLE_EVENT
 }

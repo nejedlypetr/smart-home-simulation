@@ -12,7 +12,7 @@ public class Adult extends Creature {
 
     @Override
     public Decision makeDecision(List<Event> events) {
-        if (!events.isEmpty()) return Decision.EVENT;
+        if (!events.isEmpty()) return Decision.HANDLE_EVENT;
 
         int decision = new Random().nextInt(3);
         return switch (decision) {
