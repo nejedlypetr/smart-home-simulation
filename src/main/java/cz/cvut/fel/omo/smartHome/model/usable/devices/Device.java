@@ -35,12 +35,18 @@ public abstract class Device implements Usable {
 
     @Override
     public void use() {
-        System.out.println(" is using " + getClass().getSimpleName() + ".");
+        setUsedThisTurn(true);
+        setLifespan(getLifespan()-1);
+        if (getLifespan() < 0) {
+            breakUsable();
+        }
+        System.out.println();
     }
 
     @Override
     public void breakUsable() {
-        System.out.print(" " + getClass().getSimpleName() + " broke!!!");
+        System.out.printf(" " + getClass().getSimpleName() + " broke!!!");
+        state = DeviceState.BROKEN;
     }
 
     public int getCost() {

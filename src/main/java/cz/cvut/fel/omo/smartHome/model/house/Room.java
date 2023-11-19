@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.List;
@@ -24,7 +25,11 @@ public class Room {
     }
 
     public Device getRandomDeviceFor(Creature creature) {
-        return RandomListElementPicker.pickRandomElement(devices);
+        Device device = RandomListElementPicker.pickRandomElement(devices);
+        while (device.getState() == DeviceState.BROKEN) {
+            device = RandomListElementPicker.pickRandomElement(devices);
+        }
+        return device;
     }
 
 
