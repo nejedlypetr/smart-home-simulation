@@ -2,6 +2,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.List;
@@ -21,7 +22,11 @@ public class Floor {
         return room.getRandomActivityFor(creature);
     }
 
-
+    public Device getRandomDeviceFor(Creature creature) {
+        Room room = RandomListElementPicker.pickRandomElement(rooms);
+        System.out.print(creature + "is in " + room.getName() + ". ");
+        return room.getRandomDeviceFor(creature);
+    }
 
     public String getName() {
         return name;

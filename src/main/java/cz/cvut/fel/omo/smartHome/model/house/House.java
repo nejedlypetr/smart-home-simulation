@@ -33,16 +33,19 @@ public class House {
         roundConsumption = 0;
         weatherStation.getWeatherReport();
         for (Creature creature : creatures) {
-            Activity activity = getRandomActivityFor(creature);
-            creature.doActivity(activity);
+//            Activity activity = getRandomActivityFor(creature);
+//            creature.doActivity(activity);
+            if (creature.canUseDevice()) {
+                Device usedDevice = getRandomDeviceFor(creature);
+                creature.useDevice(usedDevice);
+            }
         }
 
         while (deviceIterator.hasNext()) {
             Device device = deviceIterator.next();
             roundConsumption += device.update();
-//            System.out.println(device.getClass().getSimpleName());
         }
-        System.out.println(totalConsumption/1000 + " kWh of electricity consumed this round.");
+        System.out.println(roundConsumption/1000 + " kWh of electricity consumed this round.");
         totalConsumption += roundConsumption;
     }
 
@@ -50,6 +53,12 @@ public class House {
         Floor floor = RandomListElementPicker.pickRandomElement(floors);
         System.out.print(creature + "is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
+    }
+
+    private Device getRandomDeviceFor(Creature creature) {
+        Floor floor = RandomListElementPicker.pickRandomElement(floors);
+        System.out.print(creature + "is in " + floor.getName() + ". ");
+        return floor.getRandomDeviceFor(creature);
     }
 
     public List<Floor> getFloors() {

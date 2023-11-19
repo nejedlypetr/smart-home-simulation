@@ -23,6 +23,11 @@ public class Room {
         return RandomListElementPicker.pickRandomElement(activities);
     }
 
+    public Device getRandomDeviceFor(Creature creature) {
+        return RandomListElementPicker.pickRandomElement(devices);
+    }
+
+
 
 
     public String getName() {

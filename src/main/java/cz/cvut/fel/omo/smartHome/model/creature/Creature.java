@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.creature;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 
 public abstract class Creature {
     private String name;
@@ -17,6 +18,11 @@ public abstract class Creature {
         System.out.println(name + activity.getDescription());
     }
 
+    public void useDevice(Device device) {
+        System.out.print(name);
+        device.use();
+    }
+
     public void findActivity() {
         System.out.println("Find activity error.");
     }
@@ -28,5 +34,9 @@ public abstract class Creature {
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " " + this.getName() + " ";
+    }
+
+    public boolean canUseDevice() {
+        return getClass().equals(Child.class) || getClass().equals(Adult.class);
     }
 }

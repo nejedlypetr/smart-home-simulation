@@ -2,6 +2,7 @@ package cz.cvut.fel.omo.smartHome.model;
 
 import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.house.HouseBuilder;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 
 public class Simulation {
     private House house;
@@ -25,6 +26,7 @@ public class Simulation {
     }
 
     public void simulateNextStep() {
+        house.getFloors().get(1).getRooms().get(1).getDevices().get(1).setLifespan(1);
         printCurrentTimeInfo();
         house.simulateNextStep();
         elapseHour();
