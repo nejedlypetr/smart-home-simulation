@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
@@ -23,7 +24,17 @@ public class Room {
         return RandomListElementPicker.pickRandomElement(activities);
     }
 
+    public Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
+        List<Device> availableDevices = devices
+                .stream()
+                .filter(device -> device.getLifespan() > 0 && !device.isUsedThisTurn())
+                .toList();
+        if (availableDevices.isEmpty()) {
 
+            throw new NoDeviceAvailableException("There are no available devices in " + name);
+        }
+        return RandomListElementPicker.pickRandomElement(devices);
+    }
 
     public String getName() {
         return name;

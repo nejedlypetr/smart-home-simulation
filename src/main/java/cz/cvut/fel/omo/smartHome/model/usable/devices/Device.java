@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
+import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class Device implements Usable {
@@ -10,7 +11,14 @@ public abstract class Device implements Usable {
     private DeviceState state = DeviceState.ACTIVE;
     private boolean usedThisTurn = false;
 
+    public boolean isUsedThisTurn() {
+        return usedThisTurn;
+    }
 
+    @Override
+    public void useBy(Creature creature) {
+        System.out.print(creature + "is using " + this.getClass().getSimpleName() + ".\n");
+    }
 
     public int update() {
         if (usedThisTurn) {
