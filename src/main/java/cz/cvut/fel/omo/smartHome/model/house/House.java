@@ -7,14 +7,12 @@ import cz.cvut.fel.omo.smartHome.model.creature.Decision;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class House {
     private final List<Creature> creatures;
@@ -47,13 +45,15 @@ public class House {
         // Reset the usage status of all sports equipment for the next turn
         sportEquipments.forEach(sportEquipment -> sportEquipment.setUsedThisTurn(false));
 
-
+        // Calculate consumption
         while (deviceIterator.hasNext()) {
             Device device = deviceIterator.next();
             roundConsumption += device.update();
         }
-        System.out.println("\n" + totalConsumption / 1000 + " kWh of electricity consumed this round.");
         totalConsumption += roundConsumption;
+
+        System.out.println("\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
+        System.out.println(totalConsumption / 1000 + " kWh of electricity consumed in total.");
     }
 
     private void handleDecision(Creature creature, Decision decision) {
