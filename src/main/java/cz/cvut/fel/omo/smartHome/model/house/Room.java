@@ -1,5 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
+import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
@@ -9,7 +11,6 @@ import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 import java.util.List;
 
 public class Room {
-
     private String name;
     private List<Activity> activities;
     private List<Device> devices;
@@ -20,20 +21,27 @@ public class Room {
         this.devices = devices;
     }
 
-    public Activity getRandomActivityFor(Creature creature) {
-        return RandomListElementPicker.pickRandomElement(activities);
-    }
-
-    public Device getRandomDeviceFor(Creature creature) {
-        Device device = RandomListElementPicker.pickRandomElement(devices);
-        while (device.getState() == DeviceState.BROKEN) {
-            device = RandomListElementPicker.pickRandomElement(devices);
+    public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
+        List<Activity> validActivities = activities
+                .stream()
+                .filter(activity -> activity.getCreatureType() == creature.getClass() || activity.getCreatureType() == Creature.class)
+                .toList();
+        if (validActivities.isEmpty()) {
+            throw new NoValidActivitiesException("There are no valid activities for " + name);
         }
-        return device;
+        return RandomListElementPicker.pickRandomElement(validActivities);
     }
 
-
-
+    public Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
+        List<Device> availableDevices = devices
+                .stream()
+                .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
+                .toList();
+        if (availableDevices.isEmpty()) {
+            throw new NoDeviceAvailableException("There are no available devices in " + name);
+        }
+        return RandomListElementPicker.pickRandomElement(devices);
+    }
 
     public String getName() {
         return name;

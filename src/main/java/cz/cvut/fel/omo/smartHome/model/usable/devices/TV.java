@@ -1,10 +1,14 @@
 package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 
+import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+
 public class TV extends Device {
     @Override
-    public void use() {
-        System.out.println(" is watching TV.");
+    public void useBy(Creature creature) {
+        System.out.print(creature.getName() + " is watching TV.");
+        setUsedThisTurn(true);
+        update();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
+import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
@@ -16,15 +18,15 @@ public class Floor {
         this.rooms = rooms;
     }
 
-    public Activity getRandomActivityFor(Creature creature) {
+    public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Room room = RandomListElementPicker.pickRandomElement(rooms);
         System.out.print(creature.getName() + " is in " + room.getName() + ". ");
         return room.getRandomActivityFor(creature);
     }
 
-    public Device getRandomDeviceFor(Creature creature) {
+    public Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
         Room room = RandomListElementPicker.pickRandomElement(rooms);
-        System.out.print(creature + "is in " + room.getName() + ". ");
+        System.out.print(creature.getName() + " is in " + room.getName() + ". ");
         return room.getRandomDeviceFor(creature);
     }
 

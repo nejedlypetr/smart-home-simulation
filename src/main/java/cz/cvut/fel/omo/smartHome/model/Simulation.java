@@ -2,12 +2,10 @@ package cz.cvut.fel.omo.smartHome.model;
 
 import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.house.HouseBuilder;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Fridge;
 
 public class Simulation {
     private House house;
-    private static int hour;
+    private int hour;
     private int day;
 
     public Simulation(House house) {
@@ -32,7 +30,7 @@ public class Simulation {
         elapseHour();
     }
 
-    public static TimeOfDay getTimeOfDay() {
+    public TimeOfDay getTimeOfDay() {
         return (hour < 7 || hour > 17) ? TimeOfDay.nightTime : TimeOfDay.dayTime;
     }
 
