@@ -4,6 +4,8 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class Room {
     public Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
         List<Device> availableDevices = devices
                 .stream()
-                .filter(device -> device.getLifespan() > 0 && !device.isUsedThisTurn())
+                .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
                 .toList();
         if (availableDevices.isEmpty()) {
 

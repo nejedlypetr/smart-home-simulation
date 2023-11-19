@@ -22,6 +22,7 @@ public abstract class Device implements Usable {
 
     public int update() {
         if (usedThisTurn) {
+            usedThisTurn = false;
             return 0;
         } else {
             if (state == DeviceState.ACTIVE) {
@@ -41,8 +42,19 @@ public abstract class Device implements Usable {
     }
 
     @Override
+    public void use() {
+        setUsedThisTurn(true);
+        setLifespan(getLifespan()-1);
+        if (getLifespan() < 0) {
+            breakUsable();
+        }
+        System.out.println();
+    }
+
+    @Override
     public void breakUsable() {
-        System.out.println(getClass().getSimpleName() + " broke!!!");
+        System.out.printf(" " + getClass().getSimpleName() + " broke!!!");
+        state = DeviceState.BROKEN;
     }
 
     public int getCost() {
@@ -83,5 +95,13 @@ public abstract class Device implements Usable {
 
     public void setState(DeviceState state) {
         this.state = state;
+    }
+
+    public boolean isUsedThisTurn() {
+        return usedThisTurn;
+    }
+
+    public void setUsedThisTurn(boolean usedThisTurn) {
+        this.usedThisTurn = usedThisTurn;
     }
 }

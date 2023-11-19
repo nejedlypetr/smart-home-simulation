@@ -28,4 +28,8 @@ public abstract class Creature {
     public String toString() {
         return this.getClass().getSimpleName() + " " + this.getName() + " ";
     }
+
+    public boolean canUseDevice() {
+        return getClass().equals(Child.class) || getClass().equals(Adult.class);
+    }
 }
