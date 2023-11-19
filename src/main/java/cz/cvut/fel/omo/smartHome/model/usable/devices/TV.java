@@ -8,7 +8,6 @@ public class TV extends Device {
     public void useBy(Creature creature) {
         System.out.print(creature.getName() + " is watching TV.");
         setUsedThisTurn(true);
-        update();
     }
 
     @Override

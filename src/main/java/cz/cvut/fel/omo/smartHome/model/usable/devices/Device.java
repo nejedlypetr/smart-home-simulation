@@ -5,7 +5,7 @@ import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 1;
+    private int lifespan = 10;
     private int electricityConsumption = 100;
     private String documentation;
     private DeviceState state = DeviceState.IDLE;
@@ -16,16 +16,15 @@ public abstract class Device implements Usable {
     public void useBy(Creature creature) {
         System.out.print(creature + "is using " + this.getClass().getSimpleName() + ".");
         usedThisTurn = true;
-        update();
+        lifespan-=3;
+        if (lifespan <= 0) {
+            breakUsable();
+        }
     }
 
     public int update() {
         if (usedThisTurn) {
             usedThisTurn = false;
-            lifespan--;
-            if (lifespan <= 0) {
-                breakUsable();
-            }
 
             // todo switch to random device state
 
@@ -33,7 +32,7 @@ public abstract class Device implements Usable {
         }
 
         if (state == DeviceState.ACTIVE) {
-            lifespan--;
+            lifespan-=3;
             if (lifespan <= 0) {
                 breakUsable();
             }
@@ -66,5 +65,9 @@ public abstract class Device implements Usable {
 
     public void setUsedThisTurn(boolean usedThisTurn) {
         this.usedThisTurn = usedThisTurn;
+    }
+
+    public void setState(DeviceState state) {
+        this.state = state;
     }
 }

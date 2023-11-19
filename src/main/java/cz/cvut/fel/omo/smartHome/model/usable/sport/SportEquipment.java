@@ -5,7 +5,7 @@ import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class SportEquipment implements Usable {
     private int cost;
-    private int lifespan;
+    private int lifespan = 10;
     private boolean usedThisTurn = false;
 
     public boolean isUsedThisTurn() {
@@ -19,6 +19,10 @@ public abstract class SportEquipment implements Usable {
     @Override
     public void useBy(Creature creature) {
         System.out.print("\n" + creature + "is using " + this.getClass().getSimpleName() + ".");
+        lifespan--;
+        if (lifespan <= 0) {
+            breakUsable();
+        }
     }
 
     public int getCost() {

@@ -1,10 +1,12 @@
 package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
+import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+
 import java.util.Random;
 
 public class Laptop extends Device {
     @Override
-    public void use() {
+    public void useBy(Creature creature) {
         Random random = new Random();
         int x = random.nextInt(2);
         if (x == 1) {
@@ -19,7 +21,7 @@ public class Laptop extends Device {
             setState(DeviceState.OFF);
         }
         System.out.print(getState());
-        super.use();
+        super.useBy(creature);
     }
 
     @Override
