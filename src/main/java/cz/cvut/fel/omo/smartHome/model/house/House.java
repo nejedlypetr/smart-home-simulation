@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
+import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
@@ -52,7 +53,7 @@ public class House {
         }
         totalConsumption += roundConsumption;
 
-        System.out.println("\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
+        System.out.println("\n\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
         System.out.println(totalConsumption / 1000 + " kWh of electricity consumed in total.");
     }
 
@@ -60,44 +61,48 @@ public class House {
         switch (decision) {
             case EVENT -> {
                 // todo
-                System.out.println(creature + "is handling EVENT.");
+                System.out.print("\n" + creature + "is creating an EVENT.");
             }
             case DEVICE -> {
                 try {
                     Device device = getRandomDeviceFor(creature);
                     device.useBy(creature);
                 } catch (NoDeviceAvailableException e) {
-                    System.out.println(creature + "could not found any available device in this room, all of them are either broken or being used by someone else.\n");
+                    System.out.print(creature.getName() + " could not found any available device in this room, all of them are either broken or being used by someone else.");
                 }
             }
             case SPORT_DEVICE -> {
                 List<SportEquipment> availableSportEquipments = sportEquipments
                         .stream()
-                        .filter(sportEquipment -> !sportEquipment.isUsedThisTurn())
+                        .filter(sportEquipment -> !sportEquipment.isUsedThisTurn() && sportEquipment.getLifespan() > 0)
                         .toList();
                 if (availableSportEquipments.isEmpty()) {
-                    System.out.println(creature + "could not found any available sport equipment, all of them are either broken or being used by someone else.\n");
+                    System.out.print("\n" + creature.getName() + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
                     return;
                 }
                 SportEquipment sportEquipment = RandomListElementPicker.pickRandomElement(availableSportEquipments);
                 sportEquipment.useBy(creature);
             }
             case ACTIVITY -> {
-                Activity activity = getRandomActivityFor(creature);
-                creature.doActivity(activity);
+                try {
+                    Activity activity = getRandomActivityFor(creature);
+                    creature.doActivity(activity);
+                } catch (NoValidActivitiesException e) {
+                    System.out.print(creature.getName() + " does not know what to do here, so " + creature.getName() + " started daydreaming.");
+                }
             }
         }
     }
 
-    private Activity getRandomActivityFor(Creature creature) {
+    private Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Floor floor = RandomListElementPicker.pickRandomElement(floors);
-        System.out.print(creature + "is in " + floor.getName() + ". ");
+        System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
     }
 
     private Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
         Floor floor = RandomListElementPicker.pickRandomElement(floors);
-        System.out.print(creature + "is in " + floor.getName() + ". ");
+        System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
         return floor.getRandomDeviceFor(creature);
     }
 

@@ -18,7 +18,7 @@ public abstract class SportEquipment implements Usable {
 
     @Override
     public void useBy(Creature creature) {
-        System.out.print(creature + "is using " + this.getClass().getSimpleName() + ".\n");
+        System.out.print("\n" + creature + "is using " + this.getClass().getSimpleName() + ".");
     }
 
     public int getCost() {

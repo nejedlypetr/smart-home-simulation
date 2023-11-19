@@ -5,16 +5,16 @@ import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 10;
+    private int lifespan = 1;
     private int electricityConsumption = 100;
     private String documentation;
-    private DeviceState state = DeviceState.ACTIVE;
+    private DeviceState state = DeviceState.IDLE;
     private boolean usedThisTurn = false;
     private static final int IDLE_ELECTRICITY_CONSUMPTION = 1;
 
     @Override
     public void useBy(Creature creature) {
-        System.out.print(creature + "is using " + this.getClass().getSimpleName() + ".\n");
+        System.out.print(creature + "is using " + this.getClass().getSimpleName() + ".");
         usedThisTurn = true;
         update();
     }
@@ -52,7 +52,7 @@ public abstract class Device implements Usable {
 
     @Override
     public void breakUsable() {
-        System.out.printf(" " + getClass().getSimpleName() + " broke!!!");
+        System.out.print(" " + getClass().getSimpleName() + " broke!!!");
         state = DeviceState.BROKEN;
     }
 
@@ -62,5 +62,9 @@ public abstract class Device implements Usable {
 
     public boolean isUsedThisTurn() {
         return usedThisTurn;
+    }
+
+    public void setUsedThisTurn(boolean usedThisTurn) {
+        this.usedThisTurn = usedThisTurn;
     }
 }

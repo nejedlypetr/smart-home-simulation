@@ -17,7 +17,7 @@ public abstract class Creature {
     }
 
     public void doActivity(Activity activity) {
-        System.out.println(name + activity.getDescription());
+        System.out.print(name + activity.getDescription());
     }
 
     public Decision makeDecision(List<Event> events) {
