@@ -26,12 +26,12 @@ public class Baby extends Creature {
     public Event generateEvent(Floor floor, Room room) {
         Random random = new Random();
         int num = random.nextInt(3);
-
+        Event event;
         switch (num) {
-            case 0 -> new CreatureEvent(floor, room, "is crying.")
-            case 1 -> new CreatureEvent(floor, room, "is crying adsf.")
-            case 2 -> new CreatureEvent(floor, room, "is crying asdfaf.")
+            case 0 -> event = new CreatureEvent(floor, room, "is crying.",this);
+            case 1 -> event = new CreatureEvent(floor, room, "is crying adsf.",this);
+            default -> event = new CreatureEvent(floor, room, "is crying asdfaf.",this);
         }
-
+        return event;
     }
 }

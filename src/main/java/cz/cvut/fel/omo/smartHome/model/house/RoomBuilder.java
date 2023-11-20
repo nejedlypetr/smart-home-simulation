@@ -4,8 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Phone;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.TV;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Fridge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,8 +44,9 @@ public class RoomBuilder {
 
     public RoomBuilder withDevices() {
         this.devices = new ArrayList<>(Arrays.asList(
-                new TV(),
-                new Phone()
+//                new TV(),
+                new Fridge()
+//                new Phone()
         ));
         return this;
     }
@@ -58,6 +58,10 @@ public class RoomBuilder {
         if (activities.isEmpty() || devices.isEmpty()) {
             throw new IllegalArgumentException("Empty required argument!");
         }
-        return new Room(name,activities,devices);
+        Room room = new Room(name,activities,devices);
+        for (Device device : devices) {
+            device.setRoom(room);
+        }
+        return room;
     }
 }

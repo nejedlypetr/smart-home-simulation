@@ -37,6 +37,10 @@ public class FloorBuilder {
         if (rooms.isEmpty()) {
             throw new IllegalArgumentException("Empty required argument!");
         }
-        return new Floor(name, rooms);
+        Floor floor = new Floor(name, rooms);
+        for (Room room : rooms) {
+            room.setFloor(floor);
+        }
+        return floor;
     }
 }

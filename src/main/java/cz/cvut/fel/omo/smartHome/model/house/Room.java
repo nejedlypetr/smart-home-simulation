@@ -1,11 +1,9 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
-import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
 
 import java.util.List;
@@ -14,6 +12,7 @@ public class Room {
     private String name;
     private List<Activity> activities;
     private List<Device> devices;
+    private Floor floor;
 
     public Room(String name, List<Activity> activities, List<Device> devices) {
         this.name = name;
@@ -30,17 +29,6 @@ public class Room {
             throw new NoValidActivitiesException("There are no valid activities for " + name);
         }
         return RandomListElementPicker.pickRandomElement(validActivities);
-    }
-
-    public Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
-        List<Device> availableDevices = devices
-                .stream()
-                .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
-                .toList();
-        if (availableDevices.isEmpty()) {
-            throw new NoDeviceAvailableException("There are no available devices in " + name);
-        }
-        return RandomListElementPicker.pickRandomElement(devices);
     }
 
     public String getName() {
@@ -61,5 +49,18 @@ public class Room {
 
     public List<Device> getDevices() {
         return devices;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

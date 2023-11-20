@@ -7,7 +7,7 @@ import cz.cvut.fel.omo.smartHome.model.house.Room;
 public class CreatureEvent extends Event {
     private final Creature creature;
 
-    public CreatureEvent(Room room, Floor floor, String description, Creature creature) {
+    public CreatureEvent(Floor floor, Room room, String description, Creature creature) {
         super(room, floor, description);
         this.creature = creature;
     }

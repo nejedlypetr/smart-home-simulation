@@ -25,7 +25,7 @@ public class Laptop extends Device {
     }
 
     @Override
-    public void repair() {
+    public void repair(Creature creature) {
 
     }
 }

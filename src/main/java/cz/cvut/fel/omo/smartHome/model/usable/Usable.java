@@ -6,7 +6,7 @@ public interface Usable {
 
     void useBy(Creature creature);
 
-    void repair();
+    void repair(Creature creature);
 
     void breakUsable();
 }

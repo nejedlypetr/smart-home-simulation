@@ -11,4 +11,8 @@ public class DeviceEvent extends Event {
         super(room, floor, description);
         this.device = device;
     }
+
+    public Device getDevice() {
+        return device;
+    }
 }

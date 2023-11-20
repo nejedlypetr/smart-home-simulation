@@ -5,9 +5,11 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
+import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
@@ -38,6 +40,7 @@ public class House {
         roundConsumption = 0;
         weatherStation.getWeatherReport();
 
+        // Choose something to do for every creature (use device, do activity, handle event, use sport equpiment)
         for (Creature creature : creatures) {
             Decision decision = creature.makeDecision(events);
             handleDecision(creature, decision);
@@ -47,6 +50,7 @@ public class House {
         sportEquipments.forEach(sportEquipment -> sportEquipment.setUsedThisTurn(false));
 
         // Calculate consumption
+        System.out.print("\n\nBroken devices:");
         while (deviceIterator.hasNext()) {
             Device device = deviceIterator.next();
             roundConsumption += device.update();
@@ -60,8 +64,14 @@ public class House {
     private void handleDecision(Creature creature, Decision decision) {
         switch (decision) {
             case HANDLE_EVENT -> {
-                // todo
-                System.out.print("\n" + creature + "is handling an EVENT.");
+                Event eventToHandle = events.get(0);
+                events.remove(0);
+                if (eventToHandle.getClass().equals(DeviceEvent.class)) {
+                    DeviceEvent deviceEventToHandle = (DeviceEvent) eventToHandle;
+                    handleDeviceEvent(creature, deviceEventToHandle);
+                } else {
+                    System.out.print("\n" + creature + "is handling an EVENT.");
+                }
             }
             case GENERATE_EVENT -> {
                 // todo - pick floor, room
@@ -73,7 +83,7 @@ public class House {
                     Device device = getRandomDeviceFor(creature);
                     device.useBy(creature);
                 } catch (NoDeviceAvailableException e) {
-                    System.out.print(creature.getName() + " could not found any available device in this room, all of them are either broken or being used by someone else.");
+                    System.out.print(e.getMessage());
                 }
             }
             case SPORT_DEVICE -> {
@@ -107,11 +117,30 @@ public class House {
 
     private Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
         Floor floor = RandomListElementPicker.pickRandomElement(floors);
-        System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
-        return floor.getRandomDeviceFor(creature);
+        Room room = RandomListElementPicker.pickRandomElement(floor.getRooms());
+        List<Device> availableDevices = room.getDevices()
+                .stream()
+                .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
+                .toList();
+        if (availableDevices.isEmpty()) {
+            throw new NoDeviceAvailableException("\n" + creature + "could not found any available device in "+room+ " in " + floor + ", all of them are either broken or being used by someone else.");
+        }
+        return RandomListElementPicker.pickRandomElement(availableDevices);
+    }
+
+    private void handleDeviceEvent(Creature creature, DeviceEvent event) {
+        if (event.getDevice().isBroken()) {
+            event.getDevice().repair(creature);
+        } else {
+            event.getDevice().handle(creature);
+        }
     }
 
     public List<Floor> getFloors() {
         return floors;
+    }
+
+    public void addEvent(Event event) {
+        events.add(event);
     }
 }

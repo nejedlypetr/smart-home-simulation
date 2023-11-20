@@ -76,7 +76,11 @@ public class HouseBuilder {
         if (creatures.isEmpty() || sportEquipments.isEmpty() || floors.isEmpty()) {
             throw new IllegalArgumentException("Empty required argument!");
         }
-        return new House(creatures, sportEquipments, floors);
+        House house = new House(creatures, sportEquipments, floors);
+        for (Floor floor : floors) {
+            floor.setHouse(house);
+        }
+        return house;
     }
 
 }
