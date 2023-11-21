@@ -10,22 +10,20 @@ public class Laptop extends Device {
         Random random = new Random();
         int x = random.nextInt(2);
         if (x == 1) {
-            System.out.print(" is working on OMO seminar project on " + getClass().getSimpleName() + ".");
+            System.out.print("\n" + creature + "is in " + getRoom().getFloor() +". " + creature.getName() + " is in " + getRoom() + ". " + creature.getName() + " is working on OMO seminar project on " + getClass().getSimpleName() + ".");
         } else {
-            System.out.print(" is playing League of Legends on " + getClass().getSimpleName() + ".");
+            System.out.print("\n" + creature + "is in " + getRoom().getFloor() +". " + creature.getName() + " is in " + getRoom() + ". " + creature.getName() + " is playing League of Legends on " + getClass().getSimpleName() + ".");
         }
-        x = random.nextInt(2);
+    }
+
+    @Override
+    protected void setDeviceToNextState() {
+        Random random = new Random();
+        int x = random.nextInt(2);
         if (x == 1) {
             setState(DeviceState.IDLE);
         } else {
             setState(DeviceState.OFF);
         }
-        System.out.print(getState());
-        super.useBy(creature);
-    }
-
-    @Override
-    public void repair(Creature creature) {
-
     }
 }

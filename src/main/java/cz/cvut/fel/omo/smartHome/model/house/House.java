@@ -45,15 +45,13 @@ public class House {
             handleDecision(creature, decision);
         }
 
+        // Add events for broken sport equipment and reset them for next turn
         for (SportEquipment se : sportEquipments) {
             se.setUsedThisTurn(false);
             if (se.isBroken()) {
                 addEvent(se.generateBrokenEvent());
             }
         }
-
-        // Reset the usage status of all sports equipment for the next turn
-        sportEquipments.forEach(sportEquipment -> sportEquipment.setUsedThisTurn(false));
 
         // Calculate consumption
         System.out.print("\n\nBroken devices:");
@@ -73,17 +71,11 @@ public class House {
                 Event eventToHandle = events.get(0);
                 events.remove(0);
                 eventToHandle.handleBy(creature);
-//                if (eventToHandle.getClass().equals(DeviceEvent.class)) {
-//                    DeviceEvent deviceEventToHandle = (DeviceEvent) eventToHandle;
-//                    handleDeviceEvent(creature, deviceEventToHandle);
-//                } else {
-//                    System.out.print("\n" + creature + "is handling an EVENT.");
-//                }
             }
             case GENERATE_EVENT -> {
                 Floor floor = RandomListElementPicker.pickRandomElement(floors);
                 Room room = RandomListElementPicker.pickRandomElement(floor.getRooms());
-                creature.generateEvent(floor, room);
+                addEvent(creature.generateEvent(floor, room));
             }
             case DEVICE -> {
                 try {

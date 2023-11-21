@@ -3,8 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Fridge;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,9 +43,10 @@ public class RoomBuilder {
 
     public RoomBuilder withDevices() {
         this.devices = new ArrayList<>(Arrays.asList(
-//                new TV(),
-                new Fridge()
-//                new Phone()
+                new TV(),
+                new Laptop(),
+                new Fridge(),
+                new Phone()
         ));
         return this;
     }
