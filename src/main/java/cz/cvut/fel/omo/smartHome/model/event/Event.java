@@ -8,8 +8,7 @@ public abstract class Event {
     private Room room;
     private Floor floor;
     private String description;
-
-    private String handleDescription;
+    private final String handleDescription;
 
     public Event(Room room, Floor floor, String description, String handleDescription) {
         this.room = room;
@@ -18,9 +17,23 @@ public abstract class Event {
         this.handleDescription = handleDescription;
     }
 
-    public abstract void handleBy(Creature creature);
+    public void handleBy(Creature creature) {
+
+    }
 
     public String getHandleDescription() {
         return handleDescription;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
