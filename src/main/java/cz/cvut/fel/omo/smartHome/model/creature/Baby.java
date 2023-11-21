@@ -24,12 +24,21 @@ public class Baby extends Creature {
 
     @Override
     public Event generateEvent(Floor floor, Room room) {
+        Event event;
         int decision = new Random().nextInt(3);
-        return switch (decision) {
-            case 0 -> new CreatureEvent(this, floor, room, " is crying.", " is calming down " + this.getName() + ".");
-            case 1 ->
-                    new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
-            default -> new CreatureEvent(this, floor, room, " needs milk.", " is giving milk to " + this.getName() + ".");
-        };
+
+        switch (decision) {
+            case 0:
+                event = new CreatureEvent(this, floor, room, " is crying.", " is calming down " + this.getName() + ".");
+                break;
+            case 1:
+                event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
+                break;
+            default:
+                event = new CreatureEvent(this, floor, room, " needs milk.", " is giving milk to " + this.getName() + ".");
+        }
+
+        System.out.print("\n" + this + "is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
+        return event;
     }
 }
