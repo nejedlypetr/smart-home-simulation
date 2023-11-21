@@ -2,6 +2,7 @@ package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
+import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
@@ -9,7 +10,7 @@ import java.util.Random;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 1;
+    private int lifespan = 100;
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = DeviceState.IDLE;
@@ -84,9 +85,7 @@ public abstract class Device implements Usable {
         lifespan = 1000;
     }
 
-    public void handle(Creature creature) {
-        System.out.println("handling ");
-    }
+    public void handleEvent(Event event) {}
 
     public boolean isUsedThisTurn() {
         return usedThisTurn;

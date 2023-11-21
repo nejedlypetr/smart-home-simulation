@@ -24,6 +24,7 @@ public class DeviceEvent extends Event {
             device.repair(creature);
         } else {
             System.out.print("\n" + creature + getHandleDescription() + device.getClass().getSimpleName() + " in " + device.getRoom() + " in " + device.getRoom().getFloor() + ".");
+            device.handleEvent(this);
         }
     }
 }

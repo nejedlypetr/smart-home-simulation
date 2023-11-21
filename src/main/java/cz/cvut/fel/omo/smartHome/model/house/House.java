@@ -5,7 +5,6 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
-import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
@@ -93,7 +92,7 @@ public class House {
                         .filter(sportEquipment -> !sportEquipment.isUsedThisTurn() && sportEquipment.getLifespan() > 0)
                         .toList();
                 if (availableSportEquipments.isEmpty()) {
-                    System.out.print("\n" + creature.getName() + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
+                    System.out.print("\n" + creature + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
                     return;
                 }
                 SportEquipment sportEquipment = RandomListElementPicker.pickRandomElement(availableSportEquipments);
@@ -127,14 +126,6 @@ public class House {
             throw new NoDeviceAvailableException("\n" + creature + "could not found any available device in "+room+ " in " + floor + ", all of them are either broken or being used by someone else.");
         }
         return RandomListElementPicker.pickRandomElement(availableDevices);
-    }
-
-    private void handleDeviceEvent(Creature creature, DeviceEvent event) {
-        if (event.getDevice().isBroken()) {
-            event.getDevice().repair(creature);
-        } else {
-            event.getDevice().handle(creature);
-        }
     }
 
     public List<Floor> getFloors() {

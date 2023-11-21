@@ -6,7 +6,7 @@ import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class SportEquipment implements Usable {
     private int cost;
-    private int lifespan = 1;
+    private int lifespan = 100;
     private boolean usedThisTurn = false;
 
     public boolean isUsedThisTurn() {
