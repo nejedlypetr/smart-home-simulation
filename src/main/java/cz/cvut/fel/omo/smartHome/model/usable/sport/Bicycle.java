@@ -9,8 +9,5 @@ public class Bicycle extends SportEquipment {
 
     }
 
-    @Override
-    public void breakUsable() {
 
-    }
 }

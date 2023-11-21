@@ -1,14 +1,18 @@
 package cz.cvut.fel.omo.smartHome.model.event;
 
-import cz.cvut.fel.omo.smartHome.model.house.Floor;
-import cz.cvut.fel.omo.smartHome.model.house.Room;
+import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 
 public class SportEquipmentEvent extends Event {
     private final SportEquipment sportEquipment;
 
-    public SportEquipmentEvent(Room room, Floor floor, String description, SportEquipment sportEquipment) {
-        super(room, floor, description);
+    public SportEquipmentEvent(SportEquipment sportEquipment) {
+        super(null, null, null, null);
         this.sportEquipment = sportEquipment;
+    }
+
+    @Override
+    public void handleBy(Creature creature) {
+
     }
 }

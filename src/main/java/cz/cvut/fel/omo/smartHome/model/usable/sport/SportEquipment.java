@@ -1,11 +1,12 @@
 package cz.cvut.fel.omo.smartHome.model.usable.sport;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.event.SportEquipmentEvent;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 
 public abstract class SportEquipment implements Usable {
     private int cost;
-    private int lifespan = 10;
+    private int lifespan = 1;
     private boolean usedThisTurn = false;
 
     public boolean isUsedThisTurn() {
@@ -19,7 +20,17 @@ public abstract class SportEquipment implements Usable {
     @Override
     public void useBy(Creature creature) {
         System.out.print("\n" + creature + "is using " + this.getClass().getSimpleName() + ".");
-        lifespan--;
+        updateLifespan(-3);
+    }
+
+    @Override
+    public void breakUsable() {
+        System.out.print(" " + getClass().getSimpleName() + " broke and cannot be used until repaired!");
+        SportEquipmentEvent event = new SportEquipmentEvent(this);
+    }
+
+    private void updateLifespan(int i) {
+        lifespan += i;
         if (lifespan <= 0) {
             breakUsable();
         }

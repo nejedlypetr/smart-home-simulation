@@ -66,12 +66,13 @@ public class House {
             case HANDLE_EVENT -> {
                 Event eventToHandle = events.get(0);
                 events.remove(0);
-                if (eventToHandle.getClass().equals(DeviceEvent.class)) {
-                    DeviceEvent deviceEventToHandle = (DeviceEvent) eventToHandle;
-                    handleDeviceEvent(creature, deviceEventToHandle);
-                } else {
-                    System.out.print("\n" + creature + "is handling an EVENT.");
-                }
+                eventToHandle.handleBy(creature);
+//                if (eventToHandle.getClass().equals(DeviceEvent.class)) {
+//                    DeviceEvent deviceEventToHandle = (DeviceEvent) eventToHandle;
+//                    handleDeviceEvent(creature, deviceEventToHandle);
+//                } else {
+//                    System.out.print("\n" + creature + "is handling an EVENT.");
+//                }
             }
             case GENERATE_EVENT -> {
                 // todo - pick floor, room

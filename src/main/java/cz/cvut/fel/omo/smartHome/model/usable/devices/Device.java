@@ -61,7 +61,7 @@ public abstract class Device implements Usable {
     public void breakUsable() {
         System.out.print("\n" + getClass().getSimpleName() + " in " + room + " in " + room.getFloor() + " broke this step and needs to be repaired!");
         state = DeviceState.BROKEN;
-        DeviceEvent event = new DeviceEvent(room, room.getFloor(), "Event description",this);
+        DeviceEvent event = new DeviceEvent(room, room.getFloor(), "Event description",this, null);
         room.getFloor().getHouse().addEvent(event);
     }
 
@@ -79,7 +79,6 @@ public abstract class Device implements Usable {
 
     @Override
     public void repair(Creature creature) {
-        System.out.print("\n" + creature + "is repairing " + getClass().getSimpleName() + " in " + getRoom() + " in " + getRoom().getFloor() + ". The documentation says: " + documentation + getClass().getSimpleName() + " repaired.");
         setDeviceToNextState();
         Random random = new Random();
         lifespan = 1000;
@@ -106,5 +105,9 @@ public abstract class Device implements Usable {
     }
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getDocumentation() {
+        return documentation;
     }
 }

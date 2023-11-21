@@ -8,9 +8,4 @@ public class Ski extends SportEquipment {
     public void repair(Creature creature) {
 
     }
-
-    @Override
-    public void breakUsable() {
-
-    }
 }
