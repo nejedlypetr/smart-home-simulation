@@ -14,7 +14,6 @@ public class CreatureEvent extends Event {
 
     @Override
     public void handleBy(Creature creature) {
-        System.out.println(creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getHandleDescription());
-        super.handleBy(creature);
+        System.out.print("\n" + creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getHandleDescription());
     }
 }
