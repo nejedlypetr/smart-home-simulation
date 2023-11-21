@@ -74,9 +74,9 @@ public class House {
                 }
             }
             case GENERATE_EVENT -> {
-                // todo - pick floor, room
-
-                System.out.print("\n" + creature + "is creating an EVENT.");
+                Floor floor = RandomListElementPicker.pickRandomElement(floors);
+                Room room = RandomListElementPicker.pickRandomElement(floor.getRooms());
+                creature.generateEvent(floor, room);
             }
             case DEVICE -> {
                 try {
