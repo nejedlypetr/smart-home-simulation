@@ -13,6 +13,7 @@ public class SportEquipmentEvent extends Event {
 
     @Override
     public void handleBy(Creature creature) {
-
+        System.out.print("\n" + creature + "is repairing " + sportEquipment.getClass().getSimpleName() + ". "+ sportEquipment.getClass().getSimpleName() + " fixed.");
+        sportEquipment.repair(creature);
     }
 }

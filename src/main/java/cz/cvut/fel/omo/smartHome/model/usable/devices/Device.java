@@ -10,7 +10,7 @@ import java.util.Random;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 100;
+    private int lifespan = 1000;
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = DeviceState.IDLE;

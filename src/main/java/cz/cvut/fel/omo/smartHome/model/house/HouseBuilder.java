@@ -80,6 +80,9 @@ public class HouseBuilder {
         for (Floor floor : floors) {
             floor.setHouse(house);
         }
+        for (SportEquipment sportEquipment : sportEquipments) {
+            sportEquipment.setHouse(house);
+        }
         return house;
     }
 

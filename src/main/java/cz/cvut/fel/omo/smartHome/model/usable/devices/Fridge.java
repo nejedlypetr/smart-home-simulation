@@ -5,7 +5,7 @@ import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 
 public class Fridge extends Device {
-    private int foodIn = 1;
+    private int foodIn = 100;
 
     @Override
     public void useBy(Creature creature) {

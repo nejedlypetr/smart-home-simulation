@@ -45,6 +45,13 @@ public class House {
             handleDecision(creature, decision);
         }
 
+        for (SportEquipment se : sportEquipments) {
+            se.setUsedThisTurn(false);
+            if (se.isBroken()) {
+                addEvent(se.generateBrokenEvent());
+            }
+        }
+
         // Reset the usage status of all sports equipment for the next turn
         sportEquipments.forEach(sportEquipment -> sportEquipment.setUsedThisTurn(false));
 
