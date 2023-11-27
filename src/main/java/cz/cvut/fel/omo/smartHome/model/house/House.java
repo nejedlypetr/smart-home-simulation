@@ -11,7 +11,7 @@ import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
-import cz.cvut.fel.omo.smartHome.utils.RandomListElementPicker;
+import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +53,16 @@ public class House {
             }
         }
 
+        System.out.println();
+        for (Floor floor : floors) {
+            for (Room room : floor.getRooms()) {
+                room.getSensor().measureTemperature();
+            }
+        }
+
         // Calculate consumption
         System.out.print("\n\nBroken devices:");
+        deviceIterator.updateDevices(this);
         while (deviceIterator.hasNext()) {
             Device device = deviceIterator.next();
             roundConsumption += device.update();
@@ -73,8 +81,8 @@ public class House {
                 eventToHandle.handleBy(creature);
             }
             case GENERATE_EVENT -> {
-                Floor floor = RandomListElementPicker.pickRandomElement(floors);
-                Room room = RandomListElementPicker.pickRandomElement(floor.getRooms());
+                Floor floor = RandomPicker.pickRandomElementFromList(floors);
+                Room room = RandomPicker.pickRandomElementFromList(floor.getRooms());
                 addEvent(creature.generateEvent(floor, room));
             }
             case DEVICE -> {
@@ -94,7 +102,7 @@ public class House {
                     System.out.print("\n" + creature + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
                     return;
                 }
-                SportEquipment sportEquipment = RandomListElementPicker.pickRandomElement(availableSportEquipments);
+                SportEquipment sportEquipment = RandomPicker.pickRandomElementFromList(availableSportEquipments);
                 sportEquipment.useBy(creature);
             }
             case ACTIVITY -> {
@@ -109,14 +117,14 @@ public class House {
     }
 
     private Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
-        Floor floor = RandomListElementPicker.pickRandomElement(floors);
+        Floor floor = RandomPicker.pickRandomElementFromList(floors);
         System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
     }
 
     private Device getRandomDeviceFor(Creature creature) throws NoDeviceAvailableException {
-        Floor floor = RandomListElementPicker.pickRandomElement(floors);
-        Room room = RandomListElementPicker.pickRandomElement(floor.getRooms());
+        Floor floor = RandomPicker.pickRandomElementFromList(floors);
+        Room room = RandomPicker.pickRandomElementFromList(floor.getRooms());
         List<Device> availableDevices = room.getDevices()
                 .stream()
                 .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
@@ -124,7 +132,7 @@ public class House {
         if (availableDevices.isEmpty()) {
             throw new NoDeviceAvailableException("\n" + creature + "could not found any available device in "+room+ " in " + floor + ", all of them are either broken or being used by someone else.");
         }
-        return RandomListElementPicker.pickRandomElement(availableDevices);
+        return RandomPicker.pickRandomElementFromList(availableDevices);
     }
 
     public List<Floor> getFloors() {

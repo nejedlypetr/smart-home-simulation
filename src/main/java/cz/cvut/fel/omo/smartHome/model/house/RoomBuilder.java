@@ -43,9 +43,9 @@ public class RoomBuilder {
 
     public RoomBuilder withDevices() {
         this.devices = new ArrayList<>(Arrays.asList(
-                new TV(),
-                new Laptop(),
-                new Fridge(),
+//                new TV(),
+//                new Laptop(),
+//                new Fridge(),
                 new Phone()
         ));
         return this;

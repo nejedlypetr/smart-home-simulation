@@ -36,4 +36,5 @@ public abstract class Event {
     public String getDescription() {
         return description;
     }
+
 }

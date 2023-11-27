@@ -10,13 +10,20 @@ import java.util.Random;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 1000;
+    private int lifespan = 100;
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = DeviceState.IDLE;
     private boolean usedThisTurn = false;
     private static final int IDLE_ELECTRICITY_CONSUMPTION = 1;
     private Room room;
+
+    public Device() {}
+
+    public Device(int lifespan, String documentation) {
+        this.lifespan = lifespan;
+        this.documentation = documentation;
+    }
 
     @Override
     public void useBy(Creature creature) {
@@ -108,5 +115,13 @@ public abstract class Device implements Usable {
 
     public String getDocumentation() {
         return documentation;
+    }
+
+    public int getElectricityConsumption() {
+        return electricityConsumption;
+    }
+
+    public void setElectricityConsumption(int electricityConsumption) {
+        this.electricityConsumption = electricityConsumption;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DeviceIterator implements Iterator {
     private final House house;
-    private final List<Device> devices;
+    private List<Device> devices;
     private int currentPos;
 
     public DeviceIterator(House house) {
@@ -27,6 +27,15 @@ public class DeviceIterator implements Iterator {
             }
         }
         return result;
+    }
+
+    public void updateDevices(House house) {
+        devices = new ArrayList<>();
+        for (Floor floor : house.getFloors()) {
+            for (Room room : floor.getRooms()) {
+                devices.addAll(room.getDevices());
+            }
+        }
     }
 
     @Override

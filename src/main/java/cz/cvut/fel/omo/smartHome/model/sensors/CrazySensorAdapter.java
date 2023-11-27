@@ -1,5 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.sensors;
 
+import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
+
 public class CrazySensorAdapter implements SensorInterface {
 
     private final CrazySenzor crazySenzor;
@@ -21,5 +23,10 @@ public class CrazySensorAdapter implements SensorInterface {
     @Override
     public void notifyHouseCold() {
         crazySenzor.freeeezing();
+    }
+
+    @Override
+    public void setHeatPump(HeatPump heatPump) {
+
     }
 }

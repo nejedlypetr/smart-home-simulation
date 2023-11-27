@@ -7,6 +7,7 @@ public class Main {
         System.out.println("Smart home simulation started!");
 
         Simulation s = new Simulation();
+        s.setupHouse();
         for (int i = 0; i < 5; i++) {
             s.simulateNextStep();
         }
