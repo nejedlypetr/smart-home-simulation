@@ -16,4 +16,12 @@ public class CreatureEvent extends Event {
     public void handleBy(Creature creature) {
         System.out.print("\n" + creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getHandleDescription());
     }
+
+    public Creature getCreature() {
+        return creature;
+    }
+
+    public void print() {
+        System.out.print("\n" + creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getDescription());
+    }
 }

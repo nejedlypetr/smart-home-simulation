@@ -5,16 +5,20 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
+import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
+import cz.cvut.fel.omo.smartHome.utils.AdultComparator;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class House {
     private final List<Creature> creatures;
@@ -38,6 +42,8 @@ public class House {
     public void simulateNextStep() {
         roundConsumption = 0;
         weatherStation.getWeatherReport();
+
+        Collections.sort(creatures, new AdultComparator()); // shift adults to end of the list
 
         // Choose something to do for every creature (use device, do activity, handle event, use sport equpiment)
         for (Creature creature : creatures) {
@@ -74,6 +80,18 @@ public class House {
     }
 
     private void handleDecision(Creature creature, Decision decision) {
+        Optional<CreatureEvent> ce = events.stream()
+                .filter(event -> event instanceof CreatureEvent)
+                .map(event -> (CreatureEvent) event)
+                .filter(creatureEvent -> creatureEvent.getCreature().equals(creature))
+                .findFirst();
+
+        // check for an ongoing creature event
+        if (ce.isPresent()) {
+            ce.get().print();
+            return;
+        }
+
         switch (decision) {
             case HANDLE_EVENT -> {
                 Event eventToHandle = events.get(0);
