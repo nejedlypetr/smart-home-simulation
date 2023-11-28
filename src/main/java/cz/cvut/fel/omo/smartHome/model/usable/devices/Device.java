@@ -20,9 +20,10 @@ public abstract class Device implements Usable {
 
     public Device() {}
 
-    public Device(int lifespan, String documentation) {
+    public Device(int lifespan, String documentation, DeviceState state) {
         this.lifespan = lifespan;
         this.documentation = documentation;
+        this.state = state;
     }
 
     @Override

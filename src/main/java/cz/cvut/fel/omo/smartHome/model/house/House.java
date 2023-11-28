@@ -5,6 +5,7 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
+import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
@@ -133,6 +134,17 @@ public class House {
             throw new NoDeviceAvailableException("\n" + creature + "could not found any available device in "+room+ " in " + floor + ", all of them are either broken or being used by someone else.");
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
+    }
+
+    public void sensorUpdate(DeviceEvent event) {
+        if (event.getDescription().equals("hot")) {
+            addEvent(event);
+            System.out.print("\nIt is too cold in " + event.getRoom() + " in " + event.getRoom().getFloor() + ".");
+        }
+        if (event.getDescription().equals("cold")) {
+            addEvent(event);
+            System.out.print("\nIt is too cold in " + event.getRoom() + " in " + event.getRoom().getFloor() + ".");
+        }
     }
 
     public List<Floor> getFloors() {

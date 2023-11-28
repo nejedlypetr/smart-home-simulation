@@ -56,10 +56,11 @@ public class Simulation {
         HeatPump heatPump = new HeatPump();
         Room newRoom = new Room("Basement", List.of(),List.of(heatPump));
         heatPump.setRoom(newRoom);
-        house.getFloors().get(1).addRoom(newRoom);
+        house.getFloors().get(0).addRoom(newRoom);
         for (Floor floor : house.getFloors()) {
             for (Room room : floor.getRooms()) {
                 room.getSensor().setHeatPump(heatPump);
+                room.getSensor().setHouse(house);
             }
         }
     }

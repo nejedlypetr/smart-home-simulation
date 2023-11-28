@@ -5,7 +5,7 @@ import cz.cvut.fel.omo.smartHome.model.event.Event;
 
 public class HeatPump extends Device {
     public HeatPump() {
-        super(1,"Winter is coming... ");
+        super(100,"Winter is coming... ",DeviceState.ACTIVE);
     }
 
     @Override
@@ -17,9 +17,14 @@ public class HeatPump extends Device {
     public void handleEvent(Event event) {
 
         if (event.getDescription().equals("hot")) {
-            setElectricityConsumption((int)(getElectricityConsumption()*1.1));
-        } else {
             setElectricityConsumption((int)(getElectricityConsumption()*0.9));
+        } else {
+            setElectricityConsumption((int)(getElectricityConsumption()*1.1));
         }
+    }
+
+    @Override
+    public void setDeviceToNextState() {
+        setState(DeviceState.ACTIVE);
     }
 }
