@@ -7,7 +7,7 @@ import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.List;
 
-public class Floor {
+public class Floor implements RandomActivityFinderComposite{
     private String name;
     private List<Room> rooms;
     private House house;
@@ -17,6 +17,7 @@ public class Floor {
         this.rooms = rooms;
     }
 
+    @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Room room = RandomPicker.pickRandomElementFromList(rooms);
         System.out.print(creature.getName() + " is in " + room.getName() + ". ");

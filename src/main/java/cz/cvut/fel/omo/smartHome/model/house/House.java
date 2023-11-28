@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class House {
+public class House implements RandomActivityFinderComposite {
     private final List<Creature> creatures;
     private final List<SportEquipment> sportEquipments;
     private List<Floor> floors;
@@ -134,7 +134,8 @@ public class House {
         }
     }
 
-    private Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
+    @Override
+    public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Floor floor = RandomPicker.pickRandomElementFromList(floors);
         System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
