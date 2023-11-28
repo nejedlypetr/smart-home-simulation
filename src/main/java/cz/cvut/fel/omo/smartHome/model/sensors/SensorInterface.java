@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.smartHome.model.sensors;
 
+import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 
 public interface SensorInterface {
@@ -8,4 +9,5 @@ public interface SensorInterface {
     void notifyHouseCold();
 
     void setHeatPump(HeatPump heatPump);
+    void setHouse(House house);
 }

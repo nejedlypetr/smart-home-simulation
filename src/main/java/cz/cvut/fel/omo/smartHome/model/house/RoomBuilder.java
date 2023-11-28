@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class RoomBuilder {
     private List<Activity> activities;
 
     private List<Device> devices;
+
+    private SensorInterface sensor;
 
     public RoomBuilder() {}
 
