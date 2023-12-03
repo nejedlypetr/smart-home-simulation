@@ -2,6 +2,7 @@ package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class HeatPump extends Device {
     public HeatPump() {
@@ -11,7 +12,7 @@ public class HeatPump extends Device {
     @Override
     public void useBy(Creature creature) {
         setUsedThisTurn(true);
-        System.out.print("\n" + creature + "is in " + getRoom().getFloor() + " in " + getRoom() + ". " + creature.getName() + " is playing with control buttons for Heat Pump. Nothing happens.");
+        Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + " in " + getRoom().getName() + ". " + creature.getName() + " is playing with control buttons for Heat Pump. Nothing happens.");
     }
 
     public void handleEvent(Event event) {

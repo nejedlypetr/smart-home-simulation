@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.house;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class Floor implements RandomActivityFinderComposite{
     @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Room room = RandomPicker.pickRandomElementFromList(rooms);
-        System.out.print(creature.getName() + " is in " + room.getName() + ". ");
+        Reporter.getInstance().log(creature.getName() + " is in " + room.getName() + ". ");
         return room.getRandomActivityFor(creature);
     }
 

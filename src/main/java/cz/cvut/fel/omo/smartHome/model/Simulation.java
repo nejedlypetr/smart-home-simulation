@@ -7,6 +7,7 @@ import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.sensors.CrazySensorAdapter;
 import cz.cvut.fel.omo.smartHome.model.sensors.CrazySenzor;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Simulation {
     }
 
     public void simulateNextStep() {
-        printCurrentTimeInfo();
+        Reporter.getInstance().log("\n\n===== Day " + day + ", time: " + hour + ":00 =====\n");
         house.simulateNextStep();
         elapseHour();
     }
@@ -47,11 +48,6 @@ public class Simulation {
             hour = 0;
             day++;
         }
-    }
-
-    private void printCurrentTimeInfo() {
-        System.out.println();
-        System.out.println("======= Day " + day + ", time: " + hour + ":00 =======");
     }
 
     public void setupHouse() {

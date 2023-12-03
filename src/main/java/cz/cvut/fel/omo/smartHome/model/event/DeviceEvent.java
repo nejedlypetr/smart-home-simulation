@@ -4,6 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class DeviceEvent extends Event {
     private final Device device;
@@ -20,10 +21,10 @@ public class DeviceEvent extends Event {
     @Override
     public void handleBy(Creature creature) {
         if (getHandleDescription() == null || device.isBroken()) {
-            System.out.print("\n" + creature + "is repairing " + device.getClass().getSimpleName() + " in " + device.getRoom() + " in " + device.getRoom().getFloor() + ". The documentation says: " + device.getDocumentation() + device.getClass().getSimpleName() + " repaired.");
+            Reporter.getInstance().log("\n" + creature + " is repairing " + device.getClass().getSimpleName() + " in " + device.getRoom().getName() + " in " + device.getRoom().getFloor() + ". The documentation says: " + device.getDocumentation() + device.getClass().getSimpleName() + " repaired.");
             device.repair(creature);
         } else {
-            System.out.print("\n" + creature + getHandleDescription() + ".");
+            Reporter.getInstance().log("\n" + creature + getHandleDescription() + ".");
             device.handleEvent(this);
         }
     }

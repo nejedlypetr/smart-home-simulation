@@ -4,6 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.List;
 import java.util.Random;
@@ -39,7 +40,7 @@ public class Cat extends Creature {
                 event = new CreatureEvent(this, floor, room, " needs water.", " is giving water to " + this.getName() + ".");
         }
 
-        System.out.print("\n" + this + "is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
+        Reporter.getInstance().log("\n" + this + "is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
         return event;
     }
 }

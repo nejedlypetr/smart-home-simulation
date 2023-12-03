@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.Random;
 
@@ -10,9 +11,9 @@ public class Laptop extends Device {
         Random random = new Random();
         int x = random.nextInt(2);
         if (x == 1) {
-            System.out.print("\n" + creature + "is in " + getRoom().getFloor() +". " + creature.getName() + " is in " + getRoom() + ". " + creature.getName() + " is working on OMO seminar project on " + getClass().getSimpleName() + ".");
+            Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is working on OMO seminar project on " + getClass().getSimpleName() + ".");
         } else {
-            System.out.print("\n" + creature + "is in " + getRoom().getFloor() +". " + creature.getName() + " is in " + getRoom() + ". " + creature.getName() + " is playing League of Legends on " + getClass().getSimpleName() + ".");
+            Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is playing League of Legends on " + getClass().getSimpleName() + ".");
         }
     }
 

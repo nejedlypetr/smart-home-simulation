@@ -13,6 +13,7 @@ import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.AdultComparator;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
@@ -46,7 +47,7 @@ public class House implements RandomActivityFinderComposite {
 
         Collections.sort(creatures, new AdultComparator()); // shift adults to end of the list
 
-        // Choose something to do for every creature (use device, do activity, handle event, use sport equpiment)
+        // Choose something to do for every creature (use device/sport equipment, do activity, handle/generate event)
         for (Creature creature : creatures) {
             Decision decision = creature.makeDecision(events);
             handleDecision(creature, decision);
@@ -60,7 +61,7 @@ public class House implements RandomActivityFinderComposite {
             }
         }
 
-        System.out.println();
+        Reporter.getInstance().log("\n");
         for (Floor floor : floors) {
             for (Room room : floor.getRooms()) {
                 room.getSensor().measureTemperature();
@@ -68,7 +69,7 @@ public class House implements RandomActivityFinderComposite {
         }
 
         // Calculate consumption
-        System.out.print("\n\nBroken devices:");
+        Reporter.getInstance().log("\n\nBroken devices:");
         deviceIterator.updateDevices(this);
         while (deviceIterator.hasNext()) {
             Device device = deviceIterator.next();
@@ -76,8 +77,8 @@ public class House implements RandomActivityFinderComposite {
         }
         totalConsumption += roundConsumption;
 
-        System.out.println("\n\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
-        System.out.println(totalConsumption / 1000 + " kWh of electricity consumed in total.");
+        Reporter.getInstance().log("\n\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
+        Reporter.getInstance().log("\n" + totalConsumption / 1000 + " kWh of electricity consumed in total.");
     }
 
     private void handleDecision(Creature creature, Decision decision) {
@@ -109,7 +110,7 @@ public class House implements RandomActivityFinderComposite {
                     Device device = getRandomDeviceFor(creature);
                     device.useBy(creature);
                 } catch (NoDeviceAvailableException e) {
-                    System.out.print(e.getMessage());
+                    Reporter.getInstance().log(e.getMessage());
                 }
             }
             case SPORT_DEVICE -> {
@@ -118,7 +119,7 @@ public class House implements RandomActivityFinderComposite {
                         .filter(sportEquipment -> !sportEquipment.isUsedThisTurn() && sportEquipment.getLifespan() > 0)
                         .toList();
                 if (availableSportEquipments.isEmpty()) {
-                    System.out.print("\n" + creature + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
+                    Reporter.getInstance().log("\n" + creature + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
                     return;
                 }
                 SportEquipment sportEquipment = RandomPicker.pickRandomElementFromList(availableSportEquipments);
@@ -129,7 +130,7 @@ public class House implements RandomActivityFinderComposite {
                     Activity activity = getRandomActivityFor(creature);
                     creature.doActivity(activity);
                 } catch (NoValidActivitiesException e) {
-                    System.out.print(creature.getName() + " does not know what to do here, so " + creature.getName() + " started daydreaming.");
+                    Reporter.getInstance().log(creature.getName() + " does not know what to do here, so " + creature.getName() + " started daydreaming.");
                 }
             }
         }
@@ -138,7 +139,7 @@ public class House implements RandomActivityFinderComposite {
     @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Floor floor = RandomPicker.pickRandomElementFromList(floors);
-        System.out.print("\n" + creature + "is in " + floor.getName() + ". ");
+        Reporter.getInstance().log("\n" + creature + " is in " + floor.getName() + ". ");
         return floor.getRandomActivityFor(creature);
     }
 
@@ -150,7 +151,7 @@ public class House implements RandomActivityFinderComposite {
                 .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
                 .toList();
         if (availableDevices.isEmpty()) {
-            throw new NoDeviceAvailableException("\n" + creature + "could not found any available device in "+room+ " in " + floor + ", all of them are either broken or being used by someone else.");
+            throw new NoDeviceAvailableException("\n" + creature + " could not found any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
     }
@@ -158,11 +159,11 @@ public class House implements RandomActivityFinderComposite {
     public void sensorUpdate(DeviceEvent event) {
         if (event.getDescription().equals("hot")) {
             addEvent(event);
-            System.out.print("\nIt is too cold in " + event.getRoom() + " in " + event.getRoom().getFloor() + ".");
+            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
         }
         if (event.getDescription().equals("cold")) {
             addEvent(event);
-            System.out.print("\nIt is too cold in " + event.getRoom() + " in " + event.getRoom().getFloor() + ".");
+            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
         }
     }
 
@@ -178,19 +179,25 @@ public class House implements RandomActivityFinderComposite {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Creatures: ");
-        for (Creature creature : creatures) {
-            stringBuilder.append(String.format("%n\t%s", creature));
+        if (!creatures.isEmpty()) {
+            stringBuilder.append("Creatures: ");
+            for (Creature creature : creatures) {
+                stringBuilder.append(String.format("%n\t%s", creature));
+            }
         }
 
-        stringBuilder.append("\nSport Equipment: ");
-        for (SportEquipment sportEquipment : sportEquipments) {
-            stringBuilder.append(String.format("%n\t%s", sportEquipment));
+        if (!sportEquipments.isEmpty()) {
+            stringBuilder.append("\nSport Equipment: ");
+            for (SportEquipment sportEquipment : sportEquipments) {
+                stringBuilder.append(String.format("%n\t%s", sportEquipment));
+            }
         }
 
-        stringBuilder.append("\nFloors: ");
-        for (Floor floor : floors) {
-            stringBuilder.append(String.format("%n\t%s", floor));
+        if (!floors.isEmpty()) {
+            stringBuilder.append("\nFloors: ");
+            for (Floor floor : floors) {
+                stringBuilder.append(String.format("%n\t%s", floor));
+            }
         }
 
         return stringBuilder.toString();

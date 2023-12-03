@@ -2,6 +2,7 @@ package cz.cvut.fel.omo.smartHome.model.event;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class SportEquipmentEvent extends Event {
     private final SportEquipment sportEquipment;
@@ -13,7 +14,7 @@ public class SportEquipmentEvent extends Event {
 
     @Override
     public void handleBy(Creature creature) {
-        System.out.print("\n" + creature + "is repairing " + sportEquipment.getClass().getSimpleName() + ". "+ sportEquipment.getClass().getSimpleName() + " fixed.");
+        Reporter.getInstance().log("\n" + creature + " is repairing " + sportEquipment.getClass().getSimpleName() + ". "+ sportEquipment.getClass().getSimpleName() + " fixed.");
         sportEquipment.repair(creature);
     }
 }

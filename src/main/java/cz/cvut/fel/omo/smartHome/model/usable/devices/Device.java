@@ -5,6 +5,7 @@ import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.Random;
 
@@ -28,7 +29,7 @@ public abstract class Device implements Usable {
 
     @Override
     public void useBy(Creature creature) {
-        System.out.print("\n" + creature + "is in " + room.getFloor() +". " + creature.getName() + " is in " + room + ". " + creature.getName() + " is using " + this.getClass().getSimpleName() + ".");
+        Reporter.getInstance().log("\n" + creature + " is in " + room.getFloor().getName() +". " + creature.getName() + " is in " + room.getName() + ". " + creature.getName() + " is using " + this.getClass().getSimpleName() + ".");
         usedThisTurn = true;
     }
 
@@ -54,7 +55,7 @@ public abstract class Device implements Usable {
         }
 
         if (state == DeviceState.BROKEN) {
-            System.out.print("\n" + getClass().getSimpleName() + " in " + room + " in " + room.getFloor() + " is still broken and needs to be repaired!");
+            Reporter.getInstance().log("\n" + getClass().getSimpleName() + " in " + room.getName() + " in " + room.getFloor().getName() + " is still broken and needs to be repaired!");
         }
         return 0;
     }
@@ -68,7 +69,7 @@ public abstract class Device implements Usable {
 
     @Override
     public void breakUsable() {
-        System.out.print("\n" + getClass().getSimpleName() + " in " + room + " in " + room.getFloor() + " broke this step and needs to be repaired!");
+        Reporter.getInstance().log("\n" + getClass().getSimpleName() + " in " + room.getName() + " in " + room.getFloor().getName() + " broke this step and needs to be repaired!");
         state = DeviceState.BROKEN;
         DeviceEvent event = new DeviceEvent(room, room.getFloor(), "Event description",this, null);
         room.getFloor().getHouse().addEvent(event);

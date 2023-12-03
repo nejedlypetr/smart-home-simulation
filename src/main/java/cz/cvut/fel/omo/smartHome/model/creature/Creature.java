@@ -4,6 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public abstract class Creature {
     }
 
     public void doActivity(Activity activity) {
-        System.out.print(name + activity.getDescription());
+        Reporter.getInstance().log(name + activity.getDescription());
     }
 
     public Decision makeDecision(List<Event> events) {
@@ -32,6 +33,6 @@ public abstract class Creature {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " " + this.getName();
+        return getClass().getSimpleName() + " " + this.getName();
     }
 }

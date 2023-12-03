@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.event;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class CreatureEvent extends Event {
     private final Creature creature;
@@ -14,7 +15,7 @@ public class CreatureEvent extends Event {
 
     @Override
     public void handleBy(Creature creature) {
-        System.out.print("\n" + creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getHandleDescription());
+        Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getHandleDescription());
     }
 
     public Creature getCreature() {
@@ -22,6 +23,6 @@ public class CreatureEvent extends Event {
     }
 
     public void print() {
-        System.out.print("\n" + creature + "is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getDescription());
+        Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getName() + " in " + getFloor().getName() + ". " + creature.getName() + getDescription());
     }
 }

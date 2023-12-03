@@ -22,11 +22,11 @@ public class CrazySenzor {
         if (temp == 30) tooHotToHandle();
     }
     public void tooHotToHandle() {
-        DeviceEvent event = new DeviceEvent(room,room.getFloor(),"hot",heatPump,"heats down " + room + " in " + room.getFloor() +" using Heat Pump. Consumption lowered by 10%");
+        DeviceEvent event = new DeviceEvent(room, room.getFloor(),"hot", heatPump,"heats down " + room.getName() + " in " + room.getFloor().getName() +" using Heat Pump. Consumption lowered by 10%");
         house.sensorUpdate(event);
     }
     public void freeeezing() {
-        DeviceEvent event = new DeviceEvent(room,room.getFloor(),"cold",heatPump,"heats up " + room + " in " + room.getFloor() +" using Heat Pump. Consumption raised by 10%");
+        DeviceEvent event = new DeviceEvent(room,room.getFloor(),"cold",heatPump," heats up " + room.getName() + " in " + room.getFloor().getName() +" using Heat Pump. Consumption raised by 10%");
         house.sensorUpdate(event);
     }
 

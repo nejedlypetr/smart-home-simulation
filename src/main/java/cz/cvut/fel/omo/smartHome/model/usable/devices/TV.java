@@ -2,12 +2,13 @@ package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class TV extends Device {
 
     @Override
     public void useBy(Creature creature) {
-        System.out.print("\n" + creature + "is in " + getRoom().getFloor() +". " + creature.getName() + " is in " + getRoom() + ". " + creature.getName() + " is watching TV.");
+        Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is watching TV.");
         setUsedThisTurn(true);
     }
 

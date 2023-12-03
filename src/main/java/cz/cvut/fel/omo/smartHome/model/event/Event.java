@@ -18,7 +18,7 @@ public abstract class Event {
     }
 
     public void handleBy(Creature creature) {
-
+        throw new UnsupportedOperationException("Method is not implemented in the subclass.");
     }
 
     public String getHandleDescription() {
