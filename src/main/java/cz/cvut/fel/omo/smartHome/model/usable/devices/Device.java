@@ -125,4 +125,15 @@ public abstract class Device implements Usable {
     public void setElectricityConsumption(int electricityConsumption) {
         this.electricityConsumption = electricityConsumption;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                " {cost=" + cost +
+                ", lifespan=" + lifespan +
+                ", electricityConsumption=" + electricityConsumption +
+                ", documentation='" + documentation + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }

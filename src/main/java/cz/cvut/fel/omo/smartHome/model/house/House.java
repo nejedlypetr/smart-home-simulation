@@ -173,4 +173,26 @@ public class House implements RandomActivityFinderComposite {
     public void addEvent(Event event) {
         events.add(event);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Creatures: ");
+        for (Creature creature : creatures) {
+            stringBuilder.append(String.format("%n\t%s", creature));
+        }
+
+        stringBuilder.append("\nSport Equipment: ");
+        for (SportEquipment sportEquipment : sportEquipments) {
+            stringBuilder.append(String.format("%n\t%s", sportEquipment));
+        }
+
+        stringBuilder.append("\nFloors: ");
+        for (Floor floor : floors) {
+            stringBuilder.append(String.format("%n\t%s", floor));
+        }
+
+        return stringBuilder.toString();
+    }
 }

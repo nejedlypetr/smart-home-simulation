@@ -45,16 +45,23 @@ public class Floor implements RandomActivityFinderComposite{
         this.rooms = rooms;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     public House getHouse() {
         return house;
     }
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(name).append(":");
+        for (Room room : rooms) {
+            stringBuilder.append(String.format("%n\t\t%s", room));
+        }
+
+        return stringBuilder.toString();
     }
 }

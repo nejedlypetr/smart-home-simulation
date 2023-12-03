@@ -1,14 +1,18 @@
 package cz.cvut.fel.omo.smartHome;
 
 import cz.cvut.fel.omo.smartHome.model.Simulation;
+import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Smart home simulation started!");
-
         Simulation s = new Simulation();
         s.setupHouse();
-        for (int i = 0; i < 5; i++) {
+
+        Reporter.getInstance().log("========== SMART HOME - HOUSE CONFIGURATION ==========\n");
+        Reporter.getInstance().log(s.getHouse().toString());
+
+        Reporter.getInstance().log("\n\n========== SMART HOME - SIMULATION STARTED! ==========\n");
+        for (int i = 0; i < 2; i++) {
             s.simulateNextStep();
         }
     }

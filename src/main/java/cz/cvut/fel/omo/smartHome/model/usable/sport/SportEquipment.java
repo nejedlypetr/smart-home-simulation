@@ -70,4 +70,12 @@ public abstract class SportEquipment implements Usable {
     public void setLifespan(int lifespan) {
         this.lifespan = lifespan;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " {" +
+                "cost=" + cost +
+                ", lifespan=" + lifespan +
+                '}';
+    }
 }

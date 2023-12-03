@@ -73,6 +73,25 @@ public class Room {
 
     @Override
     public String toString() {
-        return name;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(name).append(":");
+        if (!activities.isEmpty()) {
+            stringBuilder.append("\n\t\t\tActivities:");
+            for (Activity activity : activities) {
+                stringBuilder.append(String.format("%n\t\t\t\t%s", activity));
+            }
+        }
+        if (!devices.isEmpty()) {
+            stringBuilder.append("\n\t\t\tDevices:");
+            for (Device device : devices) {
+                stringBuilder.append(String.format("%n\t\t\t\t%s", device));
+            }
+        }
+        if (sensor != null) {
+            stringBuilder.append("\n\t\t\tSensor: ").append(sensor.getClass().getSimpleName());
+        }
+
+        return stringBuilder.toString();
     }
 }

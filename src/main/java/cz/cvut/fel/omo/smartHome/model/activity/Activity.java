@@ -18,4 +18,9 @@ public class Activity {
     public Class<? extends Creature> getCreatureType() {
         return creatureType;
     }
+
+    @Override
+    public String toString() {
+        return creatureType.getSimpleName() + description;
+    }
 }
