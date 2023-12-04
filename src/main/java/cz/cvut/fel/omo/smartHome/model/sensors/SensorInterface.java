@@ -1,13 +1,9 @@
 package cz.cvut.fel.omo.smartHome.model.sensors;
 
-import cz.cvut.fel.omo.smartHome.model.house.House;
+import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 
 public interface SensorInterface {
-    void measureTemperature();
-    void notifyHouseHot();
-    void notifyHouseCold();
-
+    Event measureTemperature();
     void setHeatPump(HeatPump heatPump);
-    void setHouse(House house);
 }

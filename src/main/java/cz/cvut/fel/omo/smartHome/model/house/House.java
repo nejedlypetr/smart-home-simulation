@@ -6,7 +6,6 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
 import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
-import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
@@ -66,7 +65,10 @@ public class House implements RandomActivityFinderComposite {
         floors.stream()
                 .flatMap(floor -> floor.getRooms().stream())
                 .filter(room -> room.getSensor() != null)
-                .forEach(room -> room.getSensor().measureTemperature());
+                .forEach(room -> {
+                    Event event = room.getSensor().measureTemperature();
+                    if (event != null) addEvent(event);
+                });
 
         // Calculate consumption
         Reporter.getInstance().log("\n\nBroken devices:");
@@ -154,17 +156,6 @@ public class House implements RandomActivityFinderComposite {
             throw new NoDeviceAvailableException("\n" + creature + " could not find any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
-    }
-
-    public void sensorUpdate(DeviceEvent event) {
-        if (event.getDescription().equals("hot")) {
-            addEvent(event);
-            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
-        }
-        if (event.getDescription().equals("cold")) {
-            addEvent(event);
-            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
-        }
     }
 
     public List<Floor> getFloors() {

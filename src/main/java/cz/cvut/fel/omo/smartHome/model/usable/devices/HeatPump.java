@@ -18,11 +18,10 @@ public class HeatPump extends Device {
     }
 
     public void handleEvent(Event event) {
-
-        if (event.getDescription().equals("hot")) {
-            setElectricityConsumption((int)(getElectricityConsumption()*0.9));
-        } else {
-            setElectricityConsumption((int)(getElectricityConsumption()*1.1));
+        if (event.getDescription().contains("hot")) {
+            setElectricityConsumption((int) (getElectricityConsumption() * 0.9));
+        } else if (event.getDescription().contains("cold")) {
+            setElectricityConsumption((int) (getElectricityConsumption() * 1.1));
         }
     }
 

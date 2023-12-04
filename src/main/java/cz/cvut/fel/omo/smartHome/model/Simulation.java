@@ -59,7 +59,6 @@ public class Simulation {
         for (Floor floor : house.getFloors()) {
             for (Room room : floor.getRooms()) {
                 room.getSensor().setHeatPump(heatPump);
-                room.getSensor().setHouse(house);
             }
         }
     }
