@@ -2,11 +2,13 @@ package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.states.ActiveDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class HeatPump extends Device {
     public HeatPump() {
-        super(100,"Winter is coming... ",DeviceState.ACTIVE);
+        super(100,"Winter is coming... ");
+        setState(new ActiveDeviceState(this));
     }
 
     @Override
@@ -26,6 +28,6 @@ public class HeatPump extends Device {
 
     @Override
     public void setDeviceToNextState() {
-        setState(DeviceState.ACTIVE);
+        setState(new ActiveDeviceState(this));
     }
 }

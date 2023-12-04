@@ -50,7 +50,7 @@ public class Simulation {
         }
     }
 
-    public void setupHouse() {
+    public void setupHeatPumpAndSensors() {
         HeatPump heatPump = new HeatPump();
         Room newRoom = new Room("Basement", List.of(),List.of(heatPump));
         heatPump.setRoom(newRoom);

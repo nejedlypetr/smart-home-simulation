@@ -1,9 +1,6 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
-import cz.cvut.fel.omo.smartHome.model.creature.Adult;
-import cz.cvut.fel.omo.smartHome.model.creature.Baby;
-import cz.cvut.fel.omo.smartHome.model.creature.Child;
-import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.creature.*;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.Bicycle;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.Ski;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
@@ -31,7 +28,9 @@ public class HouseBuilder {
                 new Child("David"),
                 new Child("Charles"),
                 new Child("Emily"),
-                new Baby("Lily")
+                new Baby("Lily"),
+                new Dog("Alík"),
+                new Cat("Micka")
         ));
         return this;
     }

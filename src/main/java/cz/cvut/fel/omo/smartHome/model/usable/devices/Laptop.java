@@ -1,6 +1,8 @@
 package cz.cvut.fel.omo.smartHome.model.usable.devices;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.states.IdleDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.states.OffDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 import java.util.Random;
@@ -22,9 +24,9 @@ public class Laptop extends Device {
         Random random = new Random();
         int x = random.nextInt(2);
         if (x == 1) {
-            setState(DeviceState.IDLE);
+            setState(new IdleDeviceState(this));
         } else {
-            setState(DeviceState.OFF);
+            setState(new OffDeviceState(this));
         }
     }
 }

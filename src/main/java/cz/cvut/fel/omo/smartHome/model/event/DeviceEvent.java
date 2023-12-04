@@ -21,7 +21,7 @@ public class DeviceEvent extends Event {
     @Override
     public void handleBy(Creature creature) {
         if (getHandleDescription() == null || device.isBroken()) {
-            Reporter.getInstance().log("\n" + creature + " is repairing " + device.getClass().getSimpleName() + " in " + device.getRoom().getName() + " in " + device.getRoom().getFloor() + ". The documentation says: " + device.getDocumentation() + device.getClass().getSimpleName() + " repaired.");
+            Reporter.getInstance().log("\n" + creature + " is repairing " + device.getClass().getSimpleName() + " in " + device.getRoom().getName() + " in " + device.getRoom().getFloor().getName() + ". The documentation says: " + device.getDocumentation() + device.getClass().getSimpleName() + " repaired.");
             device.repair(creature);
         } else {
             Reporter.getInstance().log("\n" + creature + getHandleDescription() + ".");

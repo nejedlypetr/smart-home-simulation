@@ -40,7 +40,7 @@ public class Cat extends Creature {
                 event = new CreatureEvent(this, floor, room, " needs water.", " is giving water to " + this.getName() + ".");
         }
 
-        Reporter.getInstance().log("\n" + this + "is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
+        Reporter.getInstance().log("\n" + this + " is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
         return event;
     }
 }

@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.usable.devices;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.states.ActiveDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class Fridge extends Device {
@@ -26,7 +27,7 @@ public class Fridge extends Device {
 
     @Override
     protected void setDeviceToNextState() {
-        setState(DeviceState.ACTIVE);
+        setState(new ActiveDeviceState(this));
     }
 
     public void handleEvent(Event event) {

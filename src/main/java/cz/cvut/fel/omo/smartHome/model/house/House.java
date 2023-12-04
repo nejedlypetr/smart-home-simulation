@@ -5,12 +5,11 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
-import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
+import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
@@ -119,7 +118,7 @@ public class House implements RandomActivityFinderComposite {
                         .filter(sportEquipment -> !sportEquipment.isUsedThisTurn() && sportEquipment.getLifespan() > 0)
                         .toList();
                 if (availableSportEquipments.isEmpty()) {
-                    Reporter.getInstance().log("\n" + creature + " could not found any available sport equipment, all of them are either broken or being used by someone else.");
+                    Reporter.getInstance().log("\n" + creature + " could not find any available sport equipment, all of them are either broken or being used by someone else.");
                     return;
                 }
                 SportEquipment sportEquipment = RandomPicker.pickRandomElementFromList(availableSportEquipments);
@@ -148,7 +147,7 @@ public class House implements RandomActivityFinderComposite {
         Room room = RandomPicker.pickRandomElementFromList(floor.getRooms());
         List<Device> availableDevices = room.getDevices()
                 .stream()
-                .filter(device -> device.getState() != DeviceState.BROKEN && !device.isUsedThisTurn())
+                .filter(device -> !device.isBroken() && !device.isUsedThisTurn())
                 .toList();
         if (availableDevices.isEmpty()) {
             throw new NoDeviceAvailableException("\n" + creature + " could not found any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
