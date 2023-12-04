@@ -33,4 +33,8 @@ public class CrazySenzor {
     public void setHeatPump(HeatPump heatPump) {
         this.heatPump = heatPump;
     }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 }
