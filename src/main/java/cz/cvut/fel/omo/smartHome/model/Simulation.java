@@ -38,10 +38,6 @@ public class Simulation {
         elapseHour();
     }
 
-    public TimeOfDay getTimeOfDay() {
-        return (hour < 7 || hour > 17) ? TimeOfDay.nightTime : TimeOfDay.dayTime;
-    }
-
     private void elapseHour() {
         hour++;
         if (hour == 24) {
@@ -68,7 +64,11 @@ public class Simulation {
         }
     }
 
-    public House getHouse() {
-        return house;
+    public String getHouseConfiguration() {
+        return house.toString();
+    }
+
+    public void printHouseConsumptionStatistics() {
+        house.printTotalConsumptionStatistics();
     }
 }

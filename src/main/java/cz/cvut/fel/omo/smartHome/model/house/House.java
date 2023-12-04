@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class House implements RandomActivityFinderComposite {
+    private final double PRICE_PER_KWH = 5.0;
     private final List<Creature> creatures;
     private final List<SportEquipment> sportEquipments;
     private List<Floor> floors;
@@ -60,12 +61,12 @@ public class House implements RandomActivityFinderComposite {
             }
         }
 
+        // Measure temperature in rooms with sensors
         Reporter.getInstance().log("\n");
-        for (Floor floor : floors) {
-            for (Room room : floor.getRooms()) {
-                room.getSensor().measureTemperature();
-            }
-        }
+        floors.stream()
+                .flatMap(floor -> floor.getRooms().stream())
+                .filter(room -> room.getSensor() != null)
+                .forEach(room -> room.getSensor().measureTemperature());
 
         // Calculate consumption
         Reporter.getInstance().log("\n\nBroken devices:");
@@ -76,8 +77,8 @@ public class House implements RandomActivityFinderComposite {
         }
         totalConsumption += roundConsumption;
 
-        Reporter.getInstance().log("\n\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
-        Reporter.getInstance().log("\n" + totalConsumption / 1000 + " kWh of electricity consumed in total.");
+        Reporter.getInstance().log("\n\nElectricity consumed this round: " + roundConsumption / 1000 + " kWh");
+        Reporter.getInstance().log("\nTotal electricity consumed: " + totalConsumption / 1000 + " kWh");
     }
 
     private void handleDecision(Creature creature, Decision decision) {
@@ -150,7 +151,7 @@ public class House implements RandomActivityFinderComposite {
                 .filter(device -> !device.isBroken() && !device.isUsedThisTurn())
                 .toList();
         if (availableDevices.isEmpty()) {
-            throw new NoDeviceAvailableException("\n" + creature + " could not found any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
+            throw new NoDeviceAvailableException("\n" + creature + " could not find any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
     }
@@ -202,7 +203,9 @@ public class House implements RandomActivityFinderComposite {
         return stringBuilder.toString();
     }
 
-    public double getTotalConsumption() {
-        return totalConsumption;
+    public void printTotalConsumptionStatistics() {
+        double kwh = totalConsumption / 1000.0;
+        double price = Math.round(PRICE_PER_KWH * kwh * 100.0) / 100.0;
+        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.0f Kč/kWh, and spent %.2f Kč in total.", kwh, PRICE_PER_KWH, price));
     }
 }
