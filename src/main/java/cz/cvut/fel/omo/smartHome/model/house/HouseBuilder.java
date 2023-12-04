@@ -25,8 +25,9 @@ public class HouseBuilder {
         this.creatures = new ArrayList<>(Arrays.asList(
                 new Adult("John"),
                 new Adult("Mary"),
+                new Adult("Michael"),
+                new Adult("Amy"),
                 new Child("David"),
-                new Child("Charles"),
                 new Child("Emily"),
                 new Baby("Lily"),
                 new Dog("Alík"),

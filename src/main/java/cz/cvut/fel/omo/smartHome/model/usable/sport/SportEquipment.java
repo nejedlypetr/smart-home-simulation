@@ -74,9 +74,6 @@ public abstract class SportEquipment implements Usable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " {" +
-                "cost=" + cost +
-                ", lifespan=" + lifespan +
-                '}';
+        return getClass().getSimpleName();
     }
 }

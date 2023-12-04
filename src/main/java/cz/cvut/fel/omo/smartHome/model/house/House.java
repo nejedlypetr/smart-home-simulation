@@ -201,4 +201,8 @@ public class House implements RandomActivityFinderComposite {
 
         return stringBuilder.toString();
     }
+
+    public double getTotalConsumption() {
+        return totalConsumption;
+    }
 }

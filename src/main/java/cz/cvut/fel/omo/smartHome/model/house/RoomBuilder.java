@@ -4,11 +4,21 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.*;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Dishwasher;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Laptop;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Phone;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.TV;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Fridge;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.LightBulb;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.Car;
+
+import cz.cvut.fel.omo.smartHome.model.usable.devices.WashingMachine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class RoomBuilder {
     private String name;
@@ -46,16 +56,20 @@ public class RoomBuilder {
 
     public RoomBuilder withDevices() {
         this.devices = new ArrayList<>(Arrays.asList(
-//                new TV(),
-//                new Laptop(),
-//                new Fridge(),
-                new Phone()
+                new TV(),
+                new Laptop(),
+                new Fridge(),
+                new Dishwasher(),
+                new WashingMachine(),
+                new Phone(),
+                new LightBulb(),
+                new Car()
         ));
         return this;
     }
 
     public Room build() {
-        if (activities == null || devices == null || name == "") {
+        if (activities == null || devices == null || Objects.equals(name, "")) {
             throw new IllegalArgumentException("Incomplete set of required arguments!");
         }
         if (activities.isEmpty() || devices.isEmpty()) {

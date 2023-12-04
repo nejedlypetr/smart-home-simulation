@@ -4,10 +4,16 @@ import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.states.IdleDeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.states.OffDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
+import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.Random;
 
 public class Laptop extends Device {
+
+    public Laptop() {
+        super(60, "\"We told you not to open so many Chrome tabs.\" ");
+    }
+
     @Override
     public void useBy(Creature creature) {
         Random random = new Random();
@@ -21,8 +27,7 @@ public class Laptop extends Device {
 
     @Override
     protected void setDeviceToNextState() {
-        Random random = new Random();
-        int x = random.nextInt(2);
+        int x = RandomPicker.getRandomInt(0,2);
         if (x == 1) {
             setState(new IdleDeviceState(this));
         } else {

@@ -7,7 +7,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class HeatPump extends Device {
     public HeatPump() {
-        super(100,"Winter is coming... ");
+        super(250,"\nWinter is coming...\n ");
         setState(new ActiveDeviceState(this));
     }
 

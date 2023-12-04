@@ -5,23 +5,30 @@ import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.states.ActiveDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
+import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public class Fridge extends Device {
-    private int foodIn = 100;
+    private int foodInside;
+
+    public Fridge() {
+        super(40, "\"How to stop global warming? Just open all fridges.\" ");
+//        this.foodInside = RandomPicker.getRandomInt(2);
+        this.foodInside = 1;
+    }
 
     @Override
     public void useBy(Creature creature) {
-        if (foodIn > 0) {
-            foodIn--;
-            Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + ". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is taking food from Fridge. " + foodIn + " portions left" + ".");
-            if (foodIn == 0) {
+        if (foodInside > 0) {
+            foodInside--;
+            Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + ". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is taking food from Fridge. " + foodInside + " portions left" + ".");
+            if (foodInside == 0) {
                 Reporter.getInstance().log(" Fridge is out of food!");
-                DeviceEvent event = new DeviceEvent(getRoom(), getRoom().getFloor(), "fridge event", this, " goes to buy food for ");
+                DeviceEvent event = new DeviceEvent(getRoom(), getRoom().getFloor(), "fridge event", this, " goes to buy food to fill the Fridge in " + getRoom().getName() +" in "+getRoom().getFloor().getName());
                 getRoom().getFloor().getHouse().addEvent(event);
             }
             setUsedThisTurn(true);
         } else {
-            Reporter.getInstance().log("\n" + creature + " wanted to take food from Fridge in " + getRoom() + " in " + getRoom().getFloor()  + " but there is no food inside.");
+            Reporter.getInstance().log("\n" + creature + " wanted to take food from Fridge in " + getRoom().getName() + " in " + getRoom().getFloor().getName()  + " but there is no food inside.");
         }
     }
 
@@ -31,7 +38,7 @@ public class Fridge extends Device {
     }
 
     public void handleEvent(Event event) {
-        foodIn = 10;
+        foodInside = RandomPicker.getRandomInt(3,7);
     }
 
 

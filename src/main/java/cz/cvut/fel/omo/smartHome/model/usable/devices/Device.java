@@ -9,12 +9,11 @@ import cz.cvut.fel.omo.smartHome.model.usable.devices.states.BrokenDeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.states.DeviceState;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.states.IdleDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
-
-import java.util.Random;
+import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class Device implements Usable {
     private int cost;
-    private int lifespan = 3;
+    private int lifespan = RandomPicker.getRandomInt(10,50); // 20 - 80
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = new IdleDeviceState(this);
@@ -23,8 +22,14 @@ public abstract class Device implements Usable {
     private Room room;
 
     public Device() {}
-    public Device(int lifespan, String documentation) {
+    public Device(int electricityConsumption, String documentation, int lifespan) {
+        this.documentation = documentation;
+        this.electricityConsumption = electricityConsumption;
         this.lifespan = lifespan;
+    }
+
+    public Device(int electricityConsumption, String documentation) {
+        this.electricityConsumption = electricityConsumption;
         this.documentation = documentation;
     }
 
@@ -77,8 +82,7 @@ public abstract class Device implements Usable {
     @Override
     public void repair(Creature creature) {
         setDeviceToNextState();
-        Random random = new Random();
-        lifespan = 1000;
+        lifespan = RandomPicker.getRandomInt(10,100);
     }
 
     public void handleEvent(Event event) {}
@@ -116,12 +120,6 @@ public abstract class Device implements Usable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
-                " {cost=" + cost +
-                ", lifespan=" + lifespan +
-                ", electricityConsumption=" + electricityConsumption +
-                ", documentation='" + documentation + '\'' +
-                ", state=" + state +
-                '}';
+        return getClass().getSimpleName() + " with power of " + electricityConsumption + " W and documentation: " + documentation;
     }
 }
