@@ -1,5 +1,9 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import cz.cvut.fel.omo.smartHome.model.sensors.CrazySensorAdapter;
+import cz.cvut.fel.omo.smartHome.model.sensors.CrazySenzor;
+import cz.cvut.fel.omo.smartHome.model.sensors.NormalSensor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,11 +21,19 @@ public class FloorBuilder {
 
     public FloorBuilder withRooms() {
         Room room1 = new RoomBuilder()
-                .withActivities().withDevices().withName("Living room").build();
+                .withActivities()
+                .withDevices()
+                .withName("Living room")
+                .withSensor(new CrazySensorAdapter(new CrazySenzor(null)))
+                .build();
         Room room2 = new RoomBuilder()
-                .withActivities().withDevices().withName("Kitchen").build();
+                .withActivities()
+                .withDevices()
+                .withName("Kitchen")
+                .withSensor(new NormalSensor(null))
+                .build();
 
-        this.rooms = new ArrayList<>(Arrays.asList(room1,room2));
+        this.rooms = new ArrayList<>(Arrays.asList(room1, room2));
         return this;
     }
 
@@ -31,7 +43,7 @@ public class FloorBuilder {
     }
 
     public Floor build() {
-        if (rooms == null || name == "") {
+        if (rooms == null || name.equals("")) {
             throw  new IllegalArgumentException("List of rooms and name needed to build a floor");
         }
         if (rooms.isEmpty()) {

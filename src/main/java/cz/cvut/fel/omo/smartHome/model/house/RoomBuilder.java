@@ -4,16 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Dishwasher;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Laptop;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Phone;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.TV;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Fridge;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.LightBulb;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Car;
-
-import cz.cvut.fel.omo.smartHome.model.usable.devices.WashingMachine;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +33,11 @@ public class RoomBuilder {
 
     public RoomBuilder withDevices(List<Device> devices) {
         this.devices = devices;
+        return this;
+    }
+
+    public RoomBuilder withSensor(SensorInterface sensor) {
+        this.sensor = sensor;
         return this;
     }
 
@@ -75,9 +71,13 @@ public class RoomBuilder {
         if (activities.isEmpty() || devices.isEmpty()) {
             throw new IllegalArgumentException("Empty required argument!");
         }
-        Room room = new Room(name,activities,devices);
+
+        Room room = new Room(name, activities, devices, sensor);
         for (Device device : devices) {
             device.setRoom(room);
+        }
+        if (sensor != null) {
+            sensor.setRoom(room);
         }
         return room;
     }

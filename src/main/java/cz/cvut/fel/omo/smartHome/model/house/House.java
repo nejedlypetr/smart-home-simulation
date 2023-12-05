@@ -6,10 +6,10 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
 import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
-import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class House implements RandomActivityFinderComposite {
+    private final double PRICE_PER_KWH = 5.0;
     private final List<Creature> creatures;
     private final List<SportEquipment> sportEquipments;
     private List<Floor> floors;
@@ -35,6 +36,7 @@ public class House implements RandomActivityFinderComposite {
         this.creatures = creatures;
         this.sportEquipments = sportEquipments;
         this.floors = floors;
+        setupHeatPump();
         weatherStation = new WeatherStationFacade();
         deviceIterator = new DeviceIterator(this);
         events = new ArrayList<>();
@@ -60,12 +62,15 @@ public class House implements RandomActivityFinderComposite {
             }
         }
 
+        // Measure temperature in rooms with sensors
         Reporter.getInstance().log("\n");
-        for (Floor floor : floors) {
-            for (Room room : floor.getRooms()) {
-                room.getSensor().measureTemperature();
-            }
-        }
+        floors.stream()
+                .flatMap(floor -> floor.getRooms().stream())
+                .filter(room -> room.getSensor() != null)
+                .forEach(room -> {
+                    Event event = room.getSensor().measureTemperature();
+                    if (event != null) addEvent(event);
+                });
 
         // Calculate consumption
         Reporter.getInstance().log("\n\nBroken devices:");
@@ -76,8 +81,8 @@ public class House implements RandomActivityFinderComposite {
         }
         totalConsumption += roundConsumption;
 
-        Reporter.getInstance().log("\n\n" + roundConsumption / 1000 + " kWh of electricity consumed this round.");
-        Reporter.getInstance().log("\n" + totalConsumption / 1000 + " kWh of electricity consumed in total.");
+        Reporter.getInstance().log("\n\nElectricity consumed this round: " + roundConsumption / 1000 + " kWh");
+        Reporter.getInstance().log("\nTotal electricity consumed: " + totalConsumption / 1000 + " kWh");
     }
 
     private void handleDecision(Creature creature, Decision decision) {
@@ -150,20 +155,9 @@ public class House implements RandomActivityFinderComposite {
                 .filter(device -> !device.isBroken() && !device.isUsedThisTurn())
                 .toList();
         if (availableDevices.isEmpty()) {
-            throw new NoDeviceAvailableException("\n" + creature + " could not found any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
+            throw new NoDeviceAvailableException("\n" + creature + " could not find any available device in " + room.getName() + " in " + floor.getName() + ", all of them are either broken or being used by someone else.");
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
-    }
-
-    public void sensorUpdate(DeviceEvent event) {
-        if (event.getDescription().equals("hot")) {
-            addEvent(event);
-            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
-        }
-        if (event.getDescription().equals("cold")) {
-            addEvent(event);
-            Reporter.getInstance().log("\nIt is too cold in " + event.getRoom().getName() + " in " + event.getRoom().getFloor().getName() + ".");
-        }
     }
 
     public List<Floor> getFloors() {
@@ -202,7 +196,25 @@ public class House implements RandomActivityFinderComposite {
         return stringBuilder.toString();
     }
 
-    public double getTotalConsumption() {
-        return totalConsumption;
+    public void printTotalConsumptionStatistics() {
+        double kwh = totalConsumption / 1000.0;
+        double price = Math.round(PRICE_PER_KWH * kwh * 100.0) / 100.0;
+        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.0f Kč/kWh, and spent %.2f Kč in total.", kwh, PRICE_PER_KWH, price));
+    }
+
+    private void setupHeatPump() {
+        HeatPump heatPump = new HeatPump();
+        Room newRoom = new Room("Heat pump room", List.of(), List.of(heatPump), null);
+        heatPump.setRoom(newRoom);
+
+        if (floors.isEmpty()) {
+            throw new RuntimeException("Heat pump cannot be added to a house without any floors. Make sure to create a house with at least one floor.");
+        }
+
+        floors.get(0).addRoom(newRoom);
+        floors.stream()
+                .flatMap(floor -> floor.getRooms().stream())
+                .filter(room -> room.getSensor() != null)
+                .forEach(room -> room.getSensor().setHeatPump(heatPump));
     }
 }

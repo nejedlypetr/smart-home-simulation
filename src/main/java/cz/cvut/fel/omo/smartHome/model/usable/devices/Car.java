@@ -7,7 +7,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 public class Car extends Device {
 
     public Car() {
-        super(5000, "\nIn case of malfunction return to Elon Musk.\n ");
+        super(5000, "\"In case of malfunction return to Elon Musk.\" ");
     }
 
     @Override
@@ -15,9 +15,8 @@ public class Car extends Device {
         if (creature.getClass().equals(Adult.class)) {
             Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + ". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " goes for a ride with Tesla Cybertruck.");
             setUsedThisTurn(true);
-        } else {
-            Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + ". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " throws baseballs at Tesla Cybertruck.");
+            return;
         }
-
+        Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + ". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " throws baseballs at Tesla Cybertruck.");
     }
 }

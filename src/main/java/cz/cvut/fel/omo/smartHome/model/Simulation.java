@@ -1,15 +1,8 @@
 package cz.cvut.fel.omo.smartHome.model;
 
-import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.house.HouseBuilder;
-import cz.cvut.fel.omo.smartHome.model.house.Room;
-import cz.cvut.fel.omo.smartHome.model.sensors.CrazySensorAdapter;
-import cz.cvut.fel.omo.smartHome.model.sensors.CrazySenzor;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
-
-import java.util.List;
 
 public class Simulation {
     private House house;
@@ -38,10 +31,6 @@ public class Simulation {
         elapseHour();
     }
 
-    public TimeOfDay getTimeOfDay() {
-        return (hour < 7 || hour > 17) ? TimeOfDay.nightTime : TimeOfDay.dayTime;
-    }
-
     private void elapseHour() {
         hour++;
         if (hour == 24) {
@@ -50,25 +39,11 @@ public class Simulation {
         }
     }
 
-    public void setupHeatPumpAndSensors() {
-        HeatPump heatPump = new HeatPump();
-        Room newRoom = new Room("Basement", List.of(),List.of(heatPump));
-        heatPump.setRoom(newRoom);
-        house.getFloors().get(0).addRoom(newRoom);
-
-        CrazySenzor crazySenzor = new CrazySenzor(newRoom);
-        CrazySensorAdapter adapter = new CrazySensorAdapter(crazySenzor);
-        newRoom.setSensor(adapter);
-
-        for (Floor floor : house.getFloors()) {
-            for (Room room : floor.getRooms()) {
-                room.getSensor().setHeatPump(heatPump);
-                room.getSensor().setHouse(house);
-            }
-        }
+    public String getHouseConfiguration() {
+        return house.toString();
     }
 
-    public House getHouse() {
-        return house;
+    public void printHouseConsumptionStatistics() {
+        house.printTotalConsumptionStatistics();
     }
 }

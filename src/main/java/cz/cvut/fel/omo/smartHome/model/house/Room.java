@@ -3,7 +3,6 @@ package cz.cvut.fel.omo.smartHome.model.house;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
-import cz.cvut.fel.omo.smartHome.model.sensors.NormalSensor;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
@@ -17,11 +16,11 @@ public class Room {
     private Floor floor;
     private SensorInterface sensor;
 
-    public Room(String name, List<Activity> activities, List<Device> devices) {
+    public Room(String name, List<Activity> activities, List<Device> devices, SensorInterface sensor) {
         this.name = name;
         this.activities = activities;
         this.devices = devices;
-        sensor = new NormalSensor(this);
+        this.sensor = sensor;
     }
 
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
