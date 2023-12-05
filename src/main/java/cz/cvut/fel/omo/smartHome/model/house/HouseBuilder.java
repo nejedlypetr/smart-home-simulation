@@ -13,6 +13,7 @@ public class HouseBuilder {
     private List<Creature> creatures;
     private List<SportEquipment> sportEquipments;
     private List<Floor> floors;
+    private double pricePerKWh;
 
     public HouseBuilder() {}
 
@@ -54,6 +55,11 @@ public class HouseBuilder {
         return this;
     }
 
+    public HouseBuilder withPricePerKWh(double price) {
+        this.pricePerKWh = price;
+        return this;
+    }
+
     public HouseBuilder withFloors() {
         Floor floor1 = new FloorBuilder()
             .withName("First floor")
@@ -76,12 +82,9 @@ public class HouseBuilder {
         if (creatures.isEmpty() || sportEquipments.isEmpty() || floors.isEmpty()) {
             throw new IllegalArgumentException("Empty required argument!");
         }
-        House house = new House(creatures, sportEquipments, floors);
+        House house = new House(creatures, sportEquipments, floors, pricePerKWh);
         for (Floor floor : floors) {
             floor.setHouse(house);
-        }
-        for (SportEquipment sportEquipment : sportEquipments) {
-            sportEquipment.setHouse(house);
         }
         return house;
     }

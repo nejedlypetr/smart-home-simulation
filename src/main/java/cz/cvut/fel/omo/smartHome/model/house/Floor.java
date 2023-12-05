@@ -1,11 +1,14 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Floor implements RandomActivityFinderComposite{
@@ -16,6 +19,19 @@ public class Floor implements RandomActivityFinderComposite{
     public Floor(String name, List<Room> rooms) {
         this.name = name;
         this.rooms = rooms;
+    }
+
+    public static Floor fromJson(JsonObject json) {
+        String name = (String) json.get("name");
+
+        List<Room> rooms = new ArrayList<>();
+        JsonArray roomsJsonArray = (JsonArray) json.get("rooms");
+        roomsJsonArray.forEach(obj -> rooms.add(Room.fromJson((JsonObject) obj)));
+
+        return new FloorBuilder()
+                .withName(name)
+                .withRooms(rooms)
+                .build();
     }
 
     @Override
