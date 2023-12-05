@@ -9,6 +9,7 @@ import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
 import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
+import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
@@ -35,6 +36,7 @@ public class House implements RandomActivityFinderComposite {
         this.creatures = creatures;
         this.sportEquipments = sportEquipments;
         this.floors = floors;
+        setupHeatPump();
         weatherStation = new WeatherStationFacade();
         deviceIterator = new DeviceIterator(this);
         events = new ArrayList<>();
@@ -198,5 +200,21 @@ public class House implements RandomActivityFinderComposite {
         double kwh = totalConsumption / 1000.0;
         double price = Math.round(PRICE_PER_KWH * kwh * 100.0) / 100.0;
         Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.0f Kč/kWh, and spent %.2f Kč in total.", kwh, PRICE_PER_KWH, price));
+    }
+
+    private void setupHeatPump() {
+        HeatPump heatPump = new HeatPump();
+        Room newRoom = new Room("Heat pump room", List.of(), List.of(heatPump), null);
+        heatPump.setRoom(newRoom);
+
+        if (floors.isEmpty()) {
+            throw new RuntimeException("Heat pump cannot be added to a house without any floors. Make sure to create a house with at least one floor.");
+        }
+
+        floors.get(0).addRoom(newRoom);
+        floors.stream()
+                .flatMap(floor -> floor.getRooms().stream())
+                .filter(room -> room.getSensor() != null)
+                .forEach(room -> room.getSensor().setHeatPump(heatPump));
     }
 }

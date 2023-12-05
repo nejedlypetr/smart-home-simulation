@@ -2,11 +2,7 @@ package cz.cvut.fel.omo.smartHome.model;
 
 import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.house.HouseBuilder;
-import cz.cvut.fel.omo.smartHome.model.house.Room;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
-
-import java.util.List;
 
 public class Simulation {
     private House house;
@@ -41,21 +37,6 @@ public class Simulation {
             hour = 0;
             day++;
         }
-    }
-
-    public void setupHeatPumpAndSensors() {
-        HeatPump heatPump = new HeatPump();
-        Room newRoom = new Room("Basement", List.of(), List.of(heatPump), null);
-
-        heatPump.setRoom(newRoom);
-        house.getFloors().get(0).addRoom(newRoom);
-        
-        house.getFloors().stream()
-                .flatMap(floor -> floor.getRooms().stream())
-                .filter(room -> room.getSensor() != null)
-                .forEach(room -> {
-                    room.getSensor().setHeatPump(heatPump);
-                });
     }
 
     public String getHouseConfiguration() {
