@@ -48,7 +48,7 @@ public class RandomTest {
         when(roomMock.getFloor()).thenReturn(floorMock);
         when(roomMock.getName()).thenReturn("Mocked room");
         when(floorMock.getName()).thenReturn("Mocked floor");
-        testHouse = new House(List.of(testAdult),List.of(), List.of(floorMock));
+        testHouse = new House(List.of(testAdult),List.of(), List.of(floorMock),5);
         when(floorMock.getHouse()).thenReturn(testHouse);
     }
 

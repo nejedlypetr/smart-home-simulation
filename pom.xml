@@ -29,9 +29,6 @@
             <scope>test</scope>
         </dependency>
 
-    </dependencies>
-
-    <dependencies>
         <!-- https://mvnrepository.com/artifact/com.github.cliftonlabs/json-simple -->
         <dependency>
             <groupId>com.github.cliftonlabs</groupId>

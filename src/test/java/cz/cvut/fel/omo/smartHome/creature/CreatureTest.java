@@ -35,7 +35,7 @@ public class CreatureTest {
 
         testAdult = new Adult("Joseph");
         when(floorMock.getName()).thenReturn("Mocked floor");
-        testHouse = new House(List.of(testAdult),List.of(), List.of(floorMock));
+        testHouse = new House(List.of(testAdult),List.of(), List.of(floorMock),5);
     }
 
     @Test
