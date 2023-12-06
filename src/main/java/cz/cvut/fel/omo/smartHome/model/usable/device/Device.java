@@ -1,18 +1,17 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.BrokenDeviceState;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.DeviceState;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.IdleDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.BrokenDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.DeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.IdleDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class Device implements Usable {
-    private int cost;
     private int lifespan = RandomPicker.getRandomInt(10,50); // 20 - 80
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
@@ -116,6 +115,14 @@ public abstract class Device implements Usable {
 
     public void setElectricityConsumption(int electricityConsumption) {
         this.electricityConsumption = electricityConsumption;
+    }
+
+    public int getLifespan() {
+        return lifespan;
+    }
+
+    public void setLifespan(int lifespan) {
+        this.lifespan = lifespan;
     }
 
     @Override

@@ -1,6 +1,6 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices.states;
+package cz.cvut.fel.omo.smartHome.model.usable.device.state;
 
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
 
 public class IdleDeviceState extends DeviceState {
     private static final int IDLE_ELECTRICITY_CONSUMPTION = 1;

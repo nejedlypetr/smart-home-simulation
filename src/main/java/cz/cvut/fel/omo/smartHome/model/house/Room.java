@@ -4,7 +4,7 @@ import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.util.List;

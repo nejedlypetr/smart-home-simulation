@@ -3,7 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.sensors;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
+import cz.cvut.fel.omo.smartHome.model.usable.device.HeatPump;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 

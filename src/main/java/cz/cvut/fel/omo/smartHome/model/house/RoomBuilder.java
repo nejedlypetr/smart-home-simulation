@@ -4,7 +4,7 @@ import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Baby;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.*;
+import cz.cvut.fel.omo.smartHome.model.usable.device.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

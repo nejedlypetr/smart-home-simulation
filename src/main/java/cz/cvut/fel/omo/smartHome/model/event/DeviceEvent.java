@@ -3,7 +3,7 @@ package cz.cvut.fel.omo.smartHome.model.event;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class DeviceEvent extends Event {

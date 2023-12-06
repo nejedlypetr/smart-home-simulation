@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
@@ -13,6 +13,10 @@ public class TV extends Device {
 
     public TV() {
         super(102, "\"You thought this was gonna help you to repair the TV? Foolish.\" ");
+    }
+
+    public TV(int electricityConsumption, String documentation, int lifespan) {
+        super(electricityConsumption, documentation, lifespan);
     }
 
     @Override

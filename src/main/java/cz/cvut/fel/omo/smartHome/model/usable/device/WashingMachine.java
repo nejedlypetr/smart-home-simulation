@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
@@ -31,5 +31,9 @@ public class WashingMachine extends Device {
 
     public void handleEvent(Event event) {
         clothesInside = 0;
+    }
+
+    public void setClothesInside(int clothesInside) {
+        this.clothesInside = clothesInside;
     }
 }

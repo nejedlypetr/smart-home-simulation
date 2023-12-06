@@ -1,8 +1,8 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.IdleDeviceState;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.OffDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.IdleDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.OffDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 

@@ -7,9 +7,9 @@ import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.creature.Decision;
 import cz.cvut.fel.omo.smartHome.model.event.CreatureEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.DeviceIterator;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.HeatPump;
+import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.device.DeviceIterator;
+import cz.cvut.fel.omo.smartHome.model.usable.device.HeatPump;
 import cz.cvut.fel.omo.smartHome.model.usable.sport.SportEquipment;
 import cz.cvut.fel.omo.smartHome.model.weatherStation.WeatherStationFacade;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
@@ -216,5 +216,16 @@ public class House implements RandomActivityFinderComposite {
                 .flatMap(floor -> floor.getRooms().stream())
                 .filter(room -> room.getSensor() != null)
                 .forEach(room -> room.getSensor().setHeatPump(heatPump));
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setFloors(List<Floor> floors) {
+        this.floors = floors;
+        for (Floor floor : floors) {
+            floor.setHouse(this);
+        }
     }
 }

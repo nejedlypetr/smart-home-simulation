@@ -1,9 +1,9 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.ActiveDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.ActiveDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
@@ -12,8 +12,7 @@ public class Fridge extends Device {
 
     public Fridge() {
         super(40, "\"How to stop global warming? Just open all fridges.\" ");
-//        this.foodInside = RandomPicker.getRandomInt(2);
-        this.foodInside = 1;
+        this.foodInside = RandomPicker.getRandomInt(2,5);
     }
 
     @Override
@@ -41,5 +40,7 @@ public class Fridge extends Device {
         foodInside = RandomPicker.getRandomInt(3,7);
     }
 
-
+    public void setFoodInside(int foodInside) {
+        this.foodInside = foodInside;
+    }
 }

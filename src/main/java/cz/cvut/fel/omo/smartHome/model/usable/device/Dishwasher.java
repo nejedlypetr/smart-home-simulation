@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
@@ -31,5 +31,9 @@ public class Dishwasher extends Device {
 
     public void handleEvent(Event event) {
         dishesInside = 0;
+    }
+
+    public void setDishesInside(int dishesInside) {
+        this.dishesInside = dishesInside;
     }
 }

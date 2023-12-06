@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Adult;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;

@@ -1,6 +1,6 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices.states;
+package cz.cvut.fel.omo.smartHome.model.usable.device.state;
 
-import cz.cvut.fel.omo.smartHome.model.usable.devices.Device;
+import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
 
 public class ActiveDeviceState extends DeviceState {
     public ActiveDeviceState(Device device) {

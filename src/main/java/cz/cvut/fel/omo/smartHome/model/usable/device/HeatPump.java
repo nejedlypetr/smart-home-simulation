@@ -1,8 +1,8 @@
-package cz.cvut.fel.omo.smartHome.model.usable.devices;
+package cz.cvut.fel.omo.smartHome.model.usable.device;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
-import cz.cvut.fel.omo.smartHome.model.usable.devices.states.ActiveDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.ActiveDeviceState;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
 public class HeatPump extends Device {
