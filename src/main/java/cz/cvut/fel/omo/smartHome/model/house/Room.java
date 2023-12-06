@@ -1,5 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
@@ -7,6 +9,7 @@ import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
 import cz.cvut.fel.omo.smartHome.model.usable.device.Device;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
@@ -21,6 +24,34 @@ public class Room {
         this.activities = activities;
         this.devices = devices;
         this.sensor = sensor;
+    }
+
+    public static Room fromJson(JsonObject json) {
+        String name = (String) json.get("name");
+
+        List<Device> devices = new ArrayList<>();
+        JsonArray devicesJsonArray = (JsonArray) json.get("devices");
+        devicesJsonArray.forEach(obj -> devices.add(Device.fromString((String) obj)));
+
+        List<Activity> activities = new ArrayList<>();
+        JsonArray activitiesJsonArray = (JsonArray) json.get("activities");
+        activitiesJsonArray.forEach(obj -> activities.add(Activity.fromJson((JsonObject) obj)));
+
+        if (json.containsKey("sensor")) {
+            SensorInterface sensor = SensorInterface.fromString((String)  json.get("sensor"));
+            return new RoomBuilder()
+                    .withName(name)
+                    .withDevices(devices)
+                    .withSensor(sensor)
+                    .withActivities(activities)
+                    .build();
+        }
+
+        return new RoomBuilder()
+                .withName(name)
+                .withDevices(devices)
+                .withActivities(activities)
+                .build();
     }
 
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {

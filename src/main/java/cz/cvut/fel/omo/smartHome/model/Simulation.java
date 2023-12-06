@@ -17,6 +17,7 @@ public class Simulation {
 
     public Simulation() {
         this.house = new HouseBuilder()
+                        .withPricePerKWh(5.0)
                         .withCreatures()
                         .withFloors()
                         .withSportEquipments()

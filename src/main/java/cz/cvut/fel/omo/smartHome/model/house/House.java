@@ -1,5 +1,9 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonException;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
 import cz.cvut.fel.omo.smartHome.exceptions.NoDeviceAvailableException;
 import cz.cvut.fel.omo.smartHome.exceptions.NoValidActivitiesException;
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
@@ -16,13 +20,14 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.AdultComparator;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public class House implements RandomActivityFinderComposite {
-    private final double PRICE_PER_KWH = 5.0;
+    private double pricePerKWh = 5.0;
     private final List<Creature> creatures;
     private final List<SportEquipment> sportEquipments;
     private List<Floor> floors;
@@ -32,14 +37,49 @@ public class House implements RandomActivityFinderComposite {
     private double totalConsumption = 0;
     private List<Event> events;
 
-    public House(List<Creature> creatures, List<SportEquipment> sportEquipments, List<Floor> floors) {
+    public House(List<Creature> creatures, List<SportEquipment> sportEquipments, List<Floor> floors, double pricePerKWh) {
         this.creatures = creatures;
         this.sportEquipments = sportEquipments;
         this.floors = floors;
+        this.pricePerKWh = pricePerKWh;
         setupHeatPump();
         weatherStation = new WeatherStationFacade();
         deviceIterator = new DeviceIterator(this);
         events = new ArrayList<>();
+    }
+
+    public static House fromJson(JsonObject jsonObject) {
+         double price = Double.parseDouble(jsonObject.get("pricePerKWh").toString());
+
+         List<Creature> creatures = new ArrayList<>();
+         JsonArray creaturesJsonArray = (JsonArray) jsonObject.get("creatures");
+         creaturesJsonArray.forEach(obj -> creatures.add(Creature.fromJson((JsonObject) obj)));
+
+         List<SportEquipment> sportEquipments = new ArrayList<>();
+         JsonArray sportEquipmentJsonArray = (JsonArray) jsonObject.get("sportEquipment");
+         sportEquipmentJsonArray.forEach(obj -> sportEquipments.add(SportEquipment.fromString((String) obj)));
+
+         List<Floor> floors = new ArrayList<>();
+         JsonArray floorsJsonArray = (JsonArray) jsonObject.get("floors");
+         floorsJsonArray.forEach(obj -> floors.add(Floor.fromJson((JsonObject) obj)));
+
+         return new HouseBuilder()
+                 .withPricePerKWh(price)
+                 .withCreatures(creatures)
+                 .withFloors(floors)
+                 .withSportEquipments(sportEquipments)
+                 .build();
+    }
+
+    public static House configureHouseFromJsonFile(FileReader fileReader) {
+        try {
+            JsonObject jsonObject = (JsonObject) Jsoner.deserialize(fileReader);
+            Reporter.getInstance().log("House configuration loaded from a house.json file.\n");
+            return House.fromJson(jsonObject);
+        } catch (JsonException e) {
+            Reporter.getInstance().log("Error occurred while deserializing house.json\n");
+            throw new RuntimeException(e);
+        }
     }
 
     public void simulateNextStep() {
@@ -198,8 +238,8 @@ public class House implements RandomActivityFinderComposite {
 
     public void printTotalConsumptionStatistics() {
         double kwh = totalConsumption / 1000.0;
-        double price = Math.round(PRICE_PER_KWH * kwh * 100.0) / 100.0;
-        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.0f Kč/kWh, and spent %.2f Kč in total.", kwh, PRICE_PER_KWH, price));
+        double price = Math.round(pricePerKWh * kwh * 100.0) / 100.0;
+        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.2f Kč/kWh, and spent %.2f Kč in total.", kwh, pricePerKWh, price));
     }
 
     private void setupHeatPump() {

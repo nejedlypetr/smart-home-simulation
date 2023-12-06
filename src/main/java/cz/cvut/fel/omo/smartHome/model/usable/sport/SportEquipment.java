@@ -2,7 +2,6 @@ package cz.cvut.fel.omo.smartHome.model.usable.sport;
 
 import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.SportEquipmentEvent;
-import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
@@ -10,7 +9,6 @@ public abstract class SportEquipment implements Usable {
     private int cost;
     private int lifespan = 100;
     private boolean usedThisTurn = false;
-    private House house;
 
     public boolean isUsedThisTurn() {
         return usedThisTurn;
@@ -64,10 +62,6 @@ public abstract class SportEquipment implements Usable {
         return lifespan;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
-    }
-
     public void setLifespan(int lifespan) {
         this.lifespan = lifespan;
     }
@@ -75,5 +69,13 @@ public abstract class SportEquipment implements Usable {
     @Override
     public String toString() {
         return getClass().getSimpleName();
+    }
+
+    public static SportEquipment fromString(String type) {
+        switch (type) {
+            case "Bicycle": return new Bicycle();
+            case "Ski": return new Ski();
+            default: throw new RuntimeException("Invalid sport equipment type.");
+        }
     }
 }

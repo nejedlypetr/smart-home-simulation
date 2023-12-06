@@ -1,18 +1,17 @@
 package cz.cvut.fel.omo.smartHome.model.usable.device;
 
-import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.creature.*;
 import cz.cvut.fel.omo.smartHome.model.event.DeviceEvent;
 import cz.cvut.fel.omo.smartHome.model.event.Event;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
-import cz.cvut.fel.omo.smartHome.model.usable.device.state.BrokenDeviceState;
-import cz.cvut.fel.omo.smartHome.model.usable.device.state.DeviceState;
-import cz.cvut.fel.omo.smartHome.model.usable.device.state.IdleDeviceState;
+import cz.cvut.fel.omo.smartHome.model.usable.device.state.*;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class Device implements Usable {
-    private int lifespan = RandomPicker.getRandomInt(10,50); // 20 - 80
+    private int cost;
+    private int lifespan = RandomPicker.getRandomInt(10, 50); // 20 - 80
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = new IdleDeviceState(this);
@@ -30,6 +29,20 @@ public abstract class Device implements Usable {
     public Device(int electricityConsumption, String documentation) {
         this.electricityConsumption = electricityConsumption;
         this.documentation = documentation;
+    }
+
+    public static Device fromString(String type) {
+        switch (type) {
+            case "Car": return new Car();
+            case "Dish washer": return new Dishwasher();
+            case "Fridge": return new Fridge();
+            case "Laptop": return new Laptop();
+            case "Light bulb": return new LightBulb();
+            case "Phone": return new Phone();
+            case "TV": return new TV();
+            case "Washing machine": return new WashingMachine();
+            default: throw new RuntimeException("Invalid device type.");
+        }
     }
 
     @Override
