@@ -97,9 +97,6 @@ public class House implements RandomActivityFinderComposite {
         // Add events for broken sport equipment and reset them for next turn
         for (SportEquipment se : sportEquipments) {
             se.setUsedThisTurn(false);
-            if (se.isBroken()) {
-                addEvent(se.generateBrokenEvent());
-            }
         }
 
         // Measure temperature in rooms with sensors
@@ -262,10 +259,7 @@ public class House implements RandomActivityFinderComposite {
         return events;
     }
 
-    public void setFloors(List<Floor> floors) {
-        this.floors = floors;
-        for (Floor floor : floors) {
-            floor.setHouse(this);
-        }
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

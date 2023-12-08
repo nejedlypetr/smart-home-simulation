@@ -29,7 +29,7 @@ public class DeviceTest {
     private Floor floorMock;
 
     private final int electricityConsumptionTV = 102;
-    private final int lifespanTV = 5;
+    private final int initLifespan = 5;
     private static final int IDLE_ELECTRICITY_CONSUMPTION = 1;
 
 
@@ -38,7 +38,7 @@ public class DeviceTest {
         MockitoAnnotations.openMocks(this);
 
         testAdult = new Adult("Joseph");
-        testDevice = new TV(electricityConsumptionTV, "doc",lifespanTV);
+        testDevice = new TV(electricityConsumptionTV, "doc",initLifespan);
 
         testDevice.setRoom(roomMock);
         when(roomMock.getFloor()).thenReturn(floorMock);
@@ -53,7 +53,7 @@ public class DeviceTest {
         testDevice.useBy(testAdult);
         testDevice.update();
 
-        assertEquals(lifespanTV-3,testDevice.getLifespan());
+        assertEquals(initLifespan-3,testDevice.getLifespan());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class DeviceTest {
         testDevice.setState(new ActiveDeviceState(testDevice));
         testDevice.update();
 
-        assertEquals(lifespanTV-3,testDevice.getLifespan());
+        assertEquals(initLifespan-3,testDevice.getLifespan());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class DeviceTest {
         testDevice.setState(new IdleDeviceState(testDevice));
         testDevice.update();
 
-        assertEquals(lifespanTV-1,testDevice.getLifespan());
+        assertEquals(initLifespan-1,testDevice.getLifespan());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class DeviceTest {
         testDevice.setState(new OffDeviceState(testDevice));
         testDevice.update();
 
-        assertEquals(lifespanTV,testDevice.getLifespan());
+        assertEquals(initLifespan,testDevice.getLifespan());
     }
 
     @Test

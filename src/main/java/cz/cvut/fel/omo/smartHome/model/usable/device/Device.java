@@ -12,7 +12,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class Device implements Usable {
-    private int lifespan = RandomPicker.getRandomInt(10, 50);
+    private int lifespan = RandomPicker.getRandomInt(10, 30);
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = new IdleDeviceState(this);
