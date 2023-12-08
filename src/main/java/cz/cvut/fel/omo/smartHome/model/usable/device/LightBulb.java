@@ -8,6 +8,7 @@ public class LightBulb extends Device {
 
     public LightBulb() {
         super(40, "\"Just buy a new one lol.\" ");
+        setState(new ActiveDeviceState(this));
     }
 
     @Override

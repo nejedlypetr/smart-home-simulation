@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TV extends Device {
 
-    private final List<String> whatToWatch =  List.of("Peaky Blinders", "Shrek","Forrest Gump", "The Godfather");
+    private final List<String> whatToWatch =  List.of("Peaky Blinders", "Shrek","Forrest Gump", "Harry Potter");
 
     public TV() {
         super(102, "\"You thought this was gonna help you to repair the TV? Foolish.\" ");

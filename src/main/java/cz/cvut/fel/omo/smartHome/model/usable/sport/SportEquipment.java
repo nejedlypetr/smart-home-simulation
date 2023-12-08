@@ -4,19 +4,11 @@ import cz.cvut.fel.omo.smartHome.model.creature.Creature;
 import cz.cvut.fel.omo.smartHome.model.event.SportEquipmentEvent;
 import cz.cvut.fel.omo.smartHome.model.usable.Usable;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
+import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class SportEquipment implements Usable {
-    private int cost;
     private int lifespan = 100;
     private boolean usedThisTurn = false;
-
-    public boolean isUsedThisTurn() {
-        return usedThisTurn;
-    }
-
-    public void setUsedThisTurn(boolean usedThisTurn) {
-        this.usedThisTurn = usedThisTurn;
-    }
 
     @Override
     public void useBy(Creature creature) {
@@ -32,9 +24,10 @@ public abstract class SportEquipment implements Usable {
 
     @Override
     public void repair(Creature creature) {
-        lifespan = 1000;
+        lifespan = RandomPicker.getRandomInt(20,50);
     }
 
+    @Override
     public boolean isBroken() {
         return lifespan<=0;
     }
@@ -43,6 +36,7 @@ public abstract class SportEquipment implements Usable {
         return new SportEquipmentEvent(this);
     }
 
+    @Override
     public void updateLifespan(int i) {
         lifespan += i;
         if (lifespan <= 0) {
@@ -50,20 +44,16 @@ public abstract class SportEquipment implements Usable {
         }
     }
 
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
     public int getLifespan() {
         return lifespan;
     }
 
-    public void setLifespan(int lifespan) {
-        this.lifespan = lifespan;
+    public boolean isUsedThisTurn() {
+        return usedThisTurn;
+    }
+
+    public void setUsedThisTurn(boolean usedThisTurn) {
+        this.usedThisTurn = usedThisTurn;
     }
 
     @Override

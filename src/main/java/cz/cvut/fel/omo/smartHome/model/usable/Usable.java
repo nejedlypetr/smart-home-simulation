@@ -9,4 +9,8 @@ public interface Usable {
     void repair(Creature creature);
 
     void breakUsable();
+
+    boolean isBroken();
+
+    void updateLifespan(int i);
 }
