@@ -18,11 +18,11 @@ public class CrazySensorAdapter implements SensorInterface {
 
     @Override
     public void setHeatPump(HeatPump heatPump) {
-        crazySenzor.setHeatPump(heatPump);
+        crazySenzor.setCraaaazyHeatPump(heatPump);
     }
 
     @Override
     public void setRoom(Room room) {
-        crazySenzor.setRoom(room);
+        crazySenzor.setCraaazyRoom(room);
     }
 }
