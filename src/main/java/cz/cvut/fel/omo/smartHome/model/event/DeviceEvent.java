@@ -18,6 +18,14 @@ public class DeviceEvent extends Event {
         return device;
     }
 
+    /**
+     * Handles the entity's interaction with a specific creature regarding a device.
+     *
+     * If the handle description is null or the device is broken, logs the creature repairing the device,
+     * provides documentation, and repairs the device. Otherwise, logs the creature handling the device event.
+     *
+     * @param creature The creature involved in the interaction.
+     */
     @Override
     public void handleBy(Creature creature) {
         if (getHandleDescription() == null || device.isBroken()) {

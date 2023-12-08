@@ -10,6 +10,15 @@ public class Adult extends Creature {
         super(name);
     }
 
+    /**
+     * Makes a decision based on the given list of events.
+     *
+     * If the events list is not empty, the decision is to handle the event.
+     * Otherwise, a random decision is made among three options: DEVICE, SPORT_DEVICE, or ACTIVITY.
+     *
+     * @param events The list of events to consider for decision-making.
+     * @return The decision made, which can be HANDLE_EVENT, DEVICE, SPORT_DEVICE, or ACTIVITY.
+     */
     @Override
     public Decision makeDecision(List<Event> events) {
         if (!events.isEmpty()) return Decision.HANDLE_EVENT;

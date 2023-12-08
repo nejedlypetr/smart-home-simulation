@@ -12,6 +12,14 @@ public class Activity {
         this.creatureType = creatureType;
     }
 
+    /**
+     * Creates an {@code Activity} object from a {@code JsonObject} with "description" and "type" properties.
+     * Supported types: "Creature," "Adult," "Child," "Baby," "Cat," "Dog."
+     *
+     * @param json The JSON object containing activity information.
+     * @return An {@code Activity} object based on the provided JSON.
+     * @throws RuntimeException If the activity type is invalid.
+     */
     public static Activity fromJson(JsonObject json) {
         String description = (String) json.get("description");
         String type = (String) json.get("type");
