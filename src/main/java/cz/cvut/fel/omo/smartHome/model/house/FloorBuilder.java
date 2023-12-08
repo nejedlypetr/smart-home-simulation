@@ -20,6 +20,10 @@ public class FloorBuilder {
         return this;
     }
 
+    /**
+     * Initializes default rooms for the floor, including their activities, devices, names, and sensors.
+     * Returns the FloorBuilder instance.
+     */
     public FloorBuilder withRooms() {
         Room room1 = new RoomBuilder()
                 .withActivities()
@@ -55,11 +59,20 @@ public class FloorBuilder {
         return this;
     }
 
+    /**
+     * Sets the name for the floor and returns the FloorBuilder instance.
+     */
     public FloorBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
+    /**
+     * Builds the floor instance with the specified name and list of rooms, ensuring required arguments are provided.
+     *
+     * @return The constructed Floor instance.
+     * @throws IllegalArgumentException if the list of rooms or name is missing or empty.
+     */
     public Floor build() {
         if (rooms == null || name == null) {
             throw  new IllegalArgumentException("List of rooms and name needed to build a floor");

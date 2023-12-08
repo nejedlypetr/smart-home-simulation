@@ -47,7 +47,7 @@ public class House implements RandomActivityFinderComposite {
         events = new ArrayList<>();
     }
 
-    public static House fromJson(JsonObject jsonObject) {
+    private static House fromJson(JsonObject jsonObject) {
          double price = Double.parseDouble(jsonObject.get("pricePerKWh").toString());
 
          List<Creature> creatures = new ArrayList<>();
@@ -70,6 +70,14 @@ public class House implements RandomActivityFinderComposite {
                  .build();
     }
 
+    /**
+     * Configures a House instance from the contents of a JSON file using the provided FileReader.
+     * Logs the successful configuration or an error message if deserialization fails.
+     *
+     * @param fileReader The FileReader for the JSON file containing the house configuration.
+     * @return The configured House instance.
+     * @throws RuntimeException if there is an error during deserialization.
+     */
     public static House configureHouseFromJsonFile(FileReader fileReader) {
         try {
             JsonObject jsonObject = (JsonObject) Jsoner.deserialize(fileReader);
@@ -81,6 +89,11 @@ public class House implements RandomActivityFinderComposite {
         }
     }
 
+    /**
+     * Simulates the next step in the house, involving weather updates, creature decisions, device updates,
+     * event handling, sport equipment checks, and temperature measurements in sensor-equipped rooms.
+     * Logs the round's electricity consumption and the total consumption.
+     */
     public void simulateNextStep() {
         roundConsumption = 0;
         weatherStation.getWeatherReport();
@@ -176,6 +189,14 @@ public class House implements RandomActivityFinderComposite {
         }
     }
 
+    /**
+     * Retrieves a random activity for the given creature from a randomly selected floor in the house.
+     * Logs the floor and creature information.
+     *
+     * @param creature The creature for which to select a random activity.
+     * @return A randomly selected Activity instance.
+     * @throws NoValidActivitiesException if there are no valid activities on the selected floor for the specified creature.
+     */
     @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Floor floor = RandomPicker.pickRandomElementFromList(floors);
@@ -195,10 +216,19 @@ public class House implements RandomActivityFinderComposite {
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
     }
+
+    /**
+     * Adds an event to the list of events in the house.
+     *
+     * @param event The event to add.
+     */
     public void addEvent(Event event) {
         events.add(event);
     }
 
+    /**
+     * Prints the total consumption statistics, including consumed kWh, price per kWh, and total expenditure.
+     */
     public void printTotalConsumptionStatistics() {
         double kwh = totalConsumption / 1000.0;
         double price = Math.round(pricePerKWh * kwh * 100.0) / 100.0;

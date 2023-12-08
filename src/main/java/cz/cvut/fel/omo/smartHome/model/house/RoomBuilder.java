@@ -19,26 +19,41 @@ public class RoomBuilder {
 
     public RoomBuilder() {}
 
+    /**
+     * Sets the name for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
+    /**
+     * Sets the list of activities for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withActivities(List<Activity> activities) {
         this.activities = activities;
         return this;
     }
 
+    /**
+     * Sets the list of devices for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withDevices(List<Device> devices) {
         this.devices = devices;
         return this;
     }
 
+    /**
+     * Sets the sensor for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withSensor(SensorInterface sensor) {
         this.sensor = sensor;
         return this;
     }
 
+    /**
+     * Initializes default activities for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withActivities() {
         this.activities = new ArrayList<>(Arrays.asList(
             new Activity(" is sleeping. ", Creature.class),
@@ -56,6 +71,9 @@ public class RoomBuilder {
         return this;
     }
 
+    /**
+     * Initializes default devices for the room and returns the RoomBuilder instance.
+     */
     public RoomBuilder withDevices() {
         this.devices = new ArrayList<>(Arrays.asList(
                 new TV(),
@@ -67,6 +85,12 @@ public class RoomBuilder {
         return this;
     }
 
+    /**
+     * Builds the room instance.
+     *
+     * @return The constructed room.
+     * @throws IllegalArgumentException if the required arguments are incomplete or empty.
+     */
     public Room build() {
         if (activities == null || devices == null || name == null) {
             throw new IllegalArgumentException("Incomplete set of required arguments!");

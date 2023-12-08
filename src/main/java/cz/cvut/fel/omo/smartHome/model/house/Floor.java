@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Floor implements RandomActivityFinderComposite {
     private String name;
-    private List<Room> rooms;
+    private final List<Room> rooms;
     private House house;
 
     public Floor(String name, List<Room> rooms) {
@@ -21,6 +21,12 @@ public class Floor implements RandomActivityFinderComposite {
         this.rooms = rooms;
     }
 
+    /**
+     * Creates a Floor instance from a JSON object, extracting and parsing the name and list of rooms.
+     *
+     * @param json The JSON object representing the floor.
+     * @return The constructed Floor instance.
+     */
     public static Floor fromJson(JsonObject json) {
         String name = (String) json.get("name");
 
@@ -34,6 +40,14 @@ public class Floor implements RandomActivityFinderComposite {
                 .build();
     }
 
+    /**
+     * Retrieves a random activity for the given creature from a randomly selected room on the floor.
+     * Logs the room and creature information.
+     *
+     * @param creature The creature for which to select a random activity.
+     * @return A randomly selected Activity instance.
+     * @throws NoValidActivitiesException if there are no valid activities in the selected room for the specified creature.
+     */
     @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         Room room = RandomPicker.pickRandomElementFromList(rooms);
@@ -41,6 +55,11 @@ public class Floor implements RandomActivityFinderComposite {
         return room.getRandomActivityFor(creature);
     }
 
+    /**
+     * Adds a room to the floor, associates the room with the floor, and sets the floor for the room.
+     *
+     * @param room The room to add to the floor.
+     */
     public void addRoom(Room room) {
         rooms.add(room);
         room.setFloor(this);

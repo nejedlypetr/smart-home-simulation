@@ -13,6 +13,10 @@ public class WeatherStationFacade {
         hygrometer = new Hygrometer();
     }
 
+    /**
+     * Retrieves and logs the current weather report, including temperature, pressure, and humidity.
+     * Uses various meters to measure weather conditions and logs the information with the Reporter instance.
+     */
     public void getWeatherReport() {
         int temperature = thermometer.measureTemperature();
         int pressure = barometer.measurePressure();

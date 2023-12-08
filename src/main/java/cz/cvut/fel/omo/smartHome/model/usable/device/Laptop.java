@@ -16,12 +16,21 @@ public class Laptop extends Device {
         super(60, "\"We told you not to open so many Chrome tabs.\" ");
     }
 
+    /**
+     * Allows a creature to do a randomly selected activity on the Laptop.
+     *
+     * @param creature The creature using the Phone.
+     */
     @Override
     public void useBy(Creature creature) {
         setUsedThisTurn(true);
         Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is " + RandomPicker.pickRandomElementFromList(whatToDo) +" on Laptop.");
     }
 
+    /**
+     * Sets the Laptop to a randomly selected state.
+     *
+     */
     @Override
     protected void setDeviceToNextState() {
         int x = RandomPicker.getRandomInt(0,2);

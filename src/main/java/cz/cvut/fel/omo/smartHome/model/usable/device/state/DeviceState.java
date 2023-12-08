@@ -9,5 +9,9 @@ public abstract class DeviceState {
         this.device = device;
     }
 
+    /**
+     * Update device based on its state.
+     * @return Electricity consumption in this step based on its state
+     */
     public abstract int updateDevice();
 }

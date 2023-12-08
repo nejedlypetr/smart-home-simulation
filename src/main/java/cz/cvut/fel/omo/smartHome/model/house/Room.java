@@ -26,6 +26,13 @@ public class Room implements RandomActivityFinderComposite {
         this.sensor = sensor;
     }
 
+    /**
+     * Creates a Room instance from a JSON object, extracting and parsing the name, devices, activities,
+     * and optional sensor information.
+     *
+     * @param json The JSON object representing the room.
+     * @return The constructed Room instance.
+     */
     public static Room fromJson(JsonObject json) {
         String name = (String) json.get("name");
 
@@ -54,6 +61,13 @@ public class Room implements RandomActivityFinderComposite {
                 .build();
     }
 
+    /**
+     * Retrieves a random activity suitable for the given creature from the room's list of activities.
+     *
+     * @param creature The creature for which to select a random activity.
+     * @return A randomly selected Activity instance.
+     * @throws NoValidActivitiesException if there are no valid activities for the specified creature in the room.
+     */
     @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         List<Activity> validActivities = activities

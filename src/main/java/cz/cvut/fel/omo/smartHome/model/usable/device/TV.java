@@ -19,6 +19,11 @@ public class TV extends Device {
         super(electricityConsumption, documentation, lifespan);
     }
 
+    /**
+     * Allows a creature to watch a randomly selected show on the TV.
+     *
+     * @param creature The creature watching the TV.
+     */
     @Override
     public void useBy(Creature creature) {
         Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is watching " + RandomPicker.pickRandomElementFromList(whatToWatch) + " on TV.");

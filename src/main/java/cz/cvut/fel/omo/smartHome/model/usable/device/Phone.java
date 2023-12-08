@@ -11,6 +11,12 @@ public class Phone extends Device {
     public Phone() {
         super(20, "\"Have you tried turning it OFF and ON?\" ");
     }
+
+    /**
+     * Allows a creature to do a randomly selected activity on the Phone.
+     *
+     * @param creature The creature using the Phone.
+     */
     @Override
     public void useBy(Creature creature) {
         setUsedThisTurn(true);

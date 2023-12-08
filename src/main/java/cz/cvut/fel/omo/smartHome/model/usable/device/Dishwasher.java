@@ -13,6 +13,12 @@ public class Dishwasher extends Device {
         this.dishesInside = 0;
     }
 
+    /**
+     * Allows a creature to put dirty dishes into the dishwasher. Logs the event and triggers
+     * a cycle when the dishwasher is full. The dishwasher can hold up to 5 dishes.
+     *
+     * @param creature The creature using the dishwasher.
+     */
     @Override
     public void useBy(Creature creature) {
         if (dishesInside < 5) {
@@ -29,6 +35,11 @@ public class Dishwasher extends Device {
         }
     }
 
+    /**
+     * Handles a device event by resetting the number of dishes inside the dishwasher to 0.
+     *
+     * @param event The device event to handle.
+     */
     public void handleEvent(Event event) {
         dishesInside = 0;
     }

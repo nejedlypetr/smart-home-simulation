@@ -13,6 +13,10 @@ public class Simulation {
     private int day;
     private static final String FILE_NAME = "house.json";
 
+    /**
+     * Initializes a Simulation instance, loading house configuration from a file if available,
+     * otherwise creating a default configuration.
+     */
     public Simulation() {
         // File configuration
         try {
@@ -34,6 +38,9 @@ public class Simulation {
         this.day = 1;
     }
 
+    /**
+     * Simulates the next step in the house and logs the current day and time.
+     */
     public void simulateNextStep() {
         Reporter.getInstance().log("\n\n===== Day " + day + ", time: " + hour + ":00 =====\n");
         house.simulateNextStep();

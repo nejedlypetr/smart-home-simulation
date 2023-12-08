@@ -15,6 +15,11 @@ public class CrazySensor {
         this.room = room;
     }
 
+    /**
+     * Measures the temperature and generates an event based on the result.
+     *
+     * @return An event describing the temperature change or null if no important value was measured.
+     */
     public Event getTeeeeeeemperature() {
         int temp = RandomPicker.getRandomInt(15,31);
         if (temp == 15) {

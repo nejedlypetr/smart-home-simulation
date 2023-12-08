@@ -11,12 +11,23 @@ public class HeatPump extends Device {
         setState(new ActiveDeviceState(this));
     }
 
+    /**
+     * Allows a creature to interact with the Heat Pump.
+     * Logs the event.
+     *
+     * @param creature The creature interacting with the Heat Pump.
+     */
     @Override
     public void useBy(Creature creature) {
         setUsedThisTurn(true);
         Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() + " in " + getRoom().getName() + ". " + creature.getName() + " is playing with control buttons for Heat Pump. Nothing happens.");
     }
 
+    /**
+     * Handles events related to temperature changes, adjusting electricity consumption accordingly.
+     *
+     * @param event The event to handle.
+     */
     public void handleEvent(Event event) {
         if (event.getDescription().contains("hot")) {
             setElectricityConsumption((int) (getElectricityConsumption() * 0.9));

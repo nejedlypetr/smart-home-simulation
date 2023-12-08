@@ -31,6 +31,12 @@ public abstract class Device implements Usable {
         this.documentation = documentation;
     }
 
+    /**
+     * Creates a specific type of device based on the given type string.
+     *
+     * @param type The type of device to create.
+     * @return An instance of the specified device type.
+     */
     public static Device fromString(String type) {
         return switch (type) {
             case "Car" -> new Car();
@@ -45,12 +51,22 @@ public abstract class Device implements Usable {
         };
     }
 
+    /**
+     * Allows a creature to use the device. Logs the event and marks the device as used for the turn.
+     *
+     * @param creature The creature using the device.
+     */
     @Override
     public void useBy(Creature creature) {
         Reporter.getInstance().log("\n" + creature + " is in " + room.getFloor().getName() +". " + creature.getName() + " is in " + room.getName() + ". " + creature.getName() + " is using " + this.getClass().getSimpleName() + ".");
         usedThisTurn = true;
     }
 
+    /**
+     * Updates the device, handling usage and state transitions. Returns the electricity consumption.
+     *
+     * @return The electricity consumption of the device.
+     */
     public int update() {
         if (usedThisTurn) {
             usedThisTurn = false;
@@ -63,6 +79,11 @@ public abstract class Device implements Usable {
         return state.updateDevice();
     }
 
+    /**
+     * Updates the lifespan of the device and triggers a break event if the lifespan reaches zero or below.
+     *
+     * @param i The value by which to update the lifespan.
+     */
     @Override
     public void updateLifespan(int i) {
         lifespan += i;
@@ -71,6 +92,9 @@ public abstract class Device implements Usable {
         }
     }
 
+    /**
+     * Marks the device as broken, logs the event, and triggers a break event with the BrokenDeviceState.
+     */
     @Override
     public void breakUsable() {
         Reporter.getInstance().log("\n" + getClass().getSimpleName() + " in " + room.getName() + " in " + room.getFloor().getName() + " broke this step and needs to be repaired!");
@@ -79,15 +103,26 @@ public abstract class Device implements Usable {
         room.getFloor().getHouse().addEvent(event);
     }
 
+    /**
+     * Repairs the device, sets it to the next state, and generates a new random lifespan.
+     *
+     * @param creature The creature repairing the device.
+     */
     @Override
     public void repair(Creature creature) {
         setDeviceToNextState();
         lifespan = RandomPicker.getRandomInt(10,100);
     }
 
+    /**
+     * Handles an event related to the device. Throws an exception for invalid device types.
+     *
+     * @param event The event to handle.
+     */
     public void handleEvent(Event event) {
         throw new RuntimeException("Invalid device type!");
     }
+
     @Override
     public boolean isBroken() {
         return getState().getClass().equals(BrokenDeviceState.class);

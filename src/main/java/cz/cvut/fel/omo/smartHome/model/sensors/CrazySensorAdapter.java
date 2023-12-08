@@ -11,6 +11,11 @@ public class CrazySensorAdapter implements SensorInterface {
         this.crazySensor = crazySensor;
     }
 
+    /**
+     * Measures the temperature and generates an event based on the result.
+     *
+     * @return An event describing the temperature change or null if no important value was measured.
+     */
     @Override
     public Event measureTemperature() {
         return crazySensor.getTeeeeeeemperature();

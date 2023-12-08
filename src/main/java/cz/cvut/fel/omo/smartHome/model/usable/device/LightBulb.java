@@ -11,6 +11,11 @@ public class LightBulb extends Device {
         setState(new ActiveDeviceState(this));
     }
 
+    /**
+     * Allows a creature to use the Light Bulb, logs the event and marks the device as used for this turn.
+     *
+     * @param creature The creature watching the TV.
+     */
     @Override
     public void useBy(Creature creature) {
         Reporter.getInstance().log("\n" + creature + " is in " + getRoom().getFloor().getName() +". " + creature.getName() + " is in " + getRoom().getName() + ". " + creature.getName() + " is turning the Light bulb on and off again and again.. and again.");

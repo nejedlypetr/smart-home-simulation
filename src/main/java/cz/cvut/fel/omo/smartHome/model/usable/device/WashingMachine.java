@@ -13,6 +13,12 @@ public class WashingMachine extends Device {
         this.clothesInside = 0;
     }
 
+    /**
+     * Allows a creature to put dirty clothes into the Washing Machine. Logs the event and triggers
+     * a cycle when the machine is full. The machine can hold up to 5 pieces of clothing.
+     *
+     * @param creature The creature using the Washing Machine.
+     */
     @Override
     public void useBy(Creature creature) {
         if (clothesInside < 5) {
@@ -29,6 +35,11 @@ public class WashingMachine extends Device {
         }
     }
 
+    /**
+     * Handles a device event by resetting the number of clothes inside the Washing Machine to 0.
+     *
+     * @param event The device event to handle.
+     */
     public void handleEvent(Event event) {
         clothesInside = 0;
     }

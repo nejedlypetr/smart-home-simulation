@@ -9,7 +9,11 @@ public class IdleDeviceState extends DeviceState {
         super(device);
     }
 
-
+    /**
+     * Lowers lifespan by a little and return a little electricity consumption.
+     *
+     * @return Idle electricity consumption
+     */
     @Override
     public int updateDevice() {
         device.updateLifespan(-1);

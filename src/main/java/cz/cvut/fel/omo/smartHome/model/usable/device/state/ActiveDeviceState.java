@@ -7,6 +7,10 @@ public class ActiveDeviceState extends DeviceState {
         super(device);
     }
 
+    /**
+     * Lowers lifespan by a lot and return full consumption when active.
+     * @return Electricity consumption of the device
+     */
     @Override
     public int updateDevice() {
         device.updateLifespan(-3);

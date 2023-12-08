@@ -15,6 +15,12 @@ public class Fridge extends Device {
         this.foodInside = RandomPicker.getRandomInt(2,5);
     }
 
+    /**
+     * Allows a creature to take food from the fridge. Logs the event and triggers a refill event
+     * when the fridge is out of food.
+     *
+     * @param creature The creature taking food from the fridge.
+     */
     @Override
     public void useBy(Creature creature) {
         if (foodInside > 0) {
@@ -31,13 +37,17 @@ public class Fridge extends Device {
         }
     }
 
+    /**
+     * Handles a device event by refilling the fridge with a random amount of food between 3 and 7 portions.
+     *
+     * @param event The device event to handle.
+     */
+    public void handleEvent(Event event) {
+        foodInside = RandomPicker.getRandomInt(3,7);
+    }
     @Override
     protected void setDeviceToNextState() {
         setState(new ActiveDeviceState(this));
-    }
-
-    public void handleEvent(Event event) {
-        foodInside = RandomPicker.getRandomInt(3,7);
     }
 
     public void setFoodInside(int foodInside) {
