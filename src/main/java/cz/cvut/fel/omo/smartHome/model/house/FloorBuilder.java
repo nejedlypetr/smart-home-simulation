@@ -61,7 +61,7 @@ public class FloorBuilder {
     }
 
     public Floor build() {
-        if (rooms == null || name.equals("")) {
+        if (rooms == null || name == null) {
             throw  new IllegalArgumentException("List of rooms and name needed to build a floor");
         }
         if (rooms.isEmpty()) {

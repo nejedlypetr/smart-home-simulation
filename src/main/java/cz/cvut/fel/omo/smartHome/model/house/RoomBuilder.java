@@ -8,7 +8,6 @@ import cz.cvut.fel.omo.smartHome.model.usable.device.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class RoomBuilder {
     private String name;
@@ -69,7 +68,7 @@ public class RoomBuilder {
     }
 
     public Room build() {
-        if (activities == null || devices == null || Objects.equals(name, "")) {
+        if (activities == null || devices == null || name == null) {
             throw new IllegalArgumentException("Incomplete set of required arguments!");
         }
         if (activities.isEmpty() || devices.isEmpty()) {
