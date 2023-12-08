@@ -22,7 +22,6 @@ import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +29,12 @@ public class House implements RandomActivityFinderComposite {
     private double pricePerKWh = 5.0;
     private final List<Creature> creatures;
     private final List<SportEquipment> sportEquipments;
-    private List<Floor> floors;
+    private final List<Floor> floors;
     private final WeatherStationFacade weatherStation;
     private final DeviceIterator deviceIterator;
     private double roundConsumption = 0;
     private double totalConsumption = 0;
-    private List<Event> events;
+    private final List<Event> events;
 
     public House(List<Creature> creatures, List<SportEquipment> sportEquipments, List<Floor> floors, double pricePerKWh) {
         this.creatures = creatures;
@@ -86,7 +85,7 @@ public class House implements RandomActivityFinderComposite {
         roundConsumption = 0;
         weatherStation.getWeatherReport();
 
-        Collections.sort(creatures, new AdultComparator()); // shift adults to end of the list
+        creatures.sort(new AdultComparator()); // shift adults to end of the list
 
         // Choose something to do for every creature (use device/sport equipment, do activity, handle/generate event)
         for (Creature creature : creatures) {
@@ -196,13 +195,38 @@ public class House implements RandomActivityFinderComposite {
         }
         return RandomPicker.pickRandomElementFromList(availableDevices);
     }
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    public void printTotalConsumptionStatistics() {
+        double kwh = totalConsumption / 1000.0;
+        double price = Math.round(pricePerKWh * kwh * 100.0) / 100.0;
+        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.2f Kč/kWh, and spent %.2f Kč in total.", kwh, pricePerKWh, price));
+    }
+
+    private void setupHeatPump() {
+        HeatPump heatPump = new HeatPump();
+        Room newRoom = new Room("Heat pump room", List.of(), List.of(heatPump), null);
+        heatPump.setRoom(newRoom);
+
+        if (floors.isEmpty()) {
+            throw new RuntimeException("Heat pump cannot be added to a house without any floors. Make sure to create a house with at least one floor.");
+        }
+
+        floors.get(0).addRoom(newRoom);
+        floors.stream()
+                .flatMap(floor -> floor.getRooms().stream())
+                .filter(room -> room.getSensor() != null)
+                .forEach(room -> room.getSensor().setHeatPump(heatPump));
+    }
 
     public List<Floor> getFloors() {
         return floors;
     }
 
-    public void addEvent(Event event) {
-        events.add(event);
+    public List<Event> getEvents() {
+        return events;
     }
 
     @Override
@@ -231,31 +255,5 @@ public class House implements RandomActivityFinderComposite {
         }
 
         return stringBuilder.toString();
-    }
-
-    public void printTotalConsumptionStatistics() {
-        double kwh = totalConsumption / 1000.0;
-        double price = Math.round(pricePerKWh * kwh * 100.0) / 100.0;
-        Reporter.getInstance().log(String.format("\nThe family used %.2f kWh of electricity, with a price of %.2f Kč/kWh, and spent %.2f Kč in total.", kwh, pricePerKWh, price));
-    }
-
-    private void setupHeatPump() {
-        HeatPump heatPump = new HeatPump();
-        Room newRoom = new Room("Heat pump room", List.of(), List.of(heatPump), null);
-        heatPump.setRoom(newRoom);
-
-        if (floors.isEmpty()) {
-            throw new RuntimeException("Heat pump cannot be added to a house without any floors. Make sure to create a house with at least one floor.");
-        }
-
-        floors.get(0).addRoom(newRoom);
-        floors.stream()
-                .flatMap(floor -> floor.getRooms().stream())
-                .filter(room -> room.getSensor() != null)
-                .forEach(room -> room.getSensor().setHeatPump(heatPump));
-    }
-
-    public List<Event> getEvents() {
-        return events;
     }
 }

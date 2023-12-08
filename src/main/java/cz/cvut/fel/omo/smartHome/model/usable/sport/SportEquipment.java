@@ -8,7 +8,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class SportEquipment implements Usable {
-    private int lifespan = RandomPicker.getRandomInt(10,20);
+    private int lifespan = RandomPicker.getRandomInt(10,40);
     private boolean usedThisTurn = false;
     private House house;
 
@@ -69,10 +69,10 @@ public abstract class SportEquipment implements Usable {
     }
 
     public static SportEquipment fromString(String type) {
-        switch (type) {
-            case "Bicycle": return new Bicycle();
-            case "Ski": return new Ski();
-            default: throw new RuntimeException("Invalid sport equipment type.");
-        }
+        return switch (type) {
+            case "Bicycle" -> new Bicycle();
+            case "Ski" -> new Ski();
+            default -> throw new RuntimeException("Invalid sport equipment type.");
+        };
     }
 }

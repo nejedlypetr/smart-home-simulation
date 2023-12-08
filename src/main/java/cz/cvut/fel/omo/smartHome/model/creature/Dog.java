@@ -28,16 +28,11 @@ public class Dog extends Creature {
         Event event;
         int decision = new Random().nextInt(3);
 
-        switch (decision) {
-            case 0:
-                event = new CreatureEvent(this, floor, room, " is hungry.", " is giving food to " + this.getName() + ".");
-                break;
-            case 1:
-                event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
-                break;
-            default:
-                event = new CreatureEvent(this, floor, room, " wants to play with someone.", " is playing with " + this.getName() + ".");
-        }
+        event = switch (decision) {
+            case 0 -> new CreatureEvent(this, floor, room, " is hungry.", " is giving food to " + this.getName() + ".");
+            case 1 -> new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
+            default -> new CreatureEvent(this, floor, room, " wants to play with someone.", " is playing with " + this.getName() + ".");
+        };
 
         Reporter.getInstance().log("\n" + this + " is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
         return event;

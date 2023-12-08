@@ -1,7 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.model.sensors.CrazySensorAdapter;
-import cz.cvut.fel.omo.smartHome.model.sensors.CrazySenzor;
+import cz.cvut.fel.omo.smartHome.model.sensors.CrazySensor;
 import cz.cvut.fel.omo.smartHome.model.sensors.NormalSensor;
 import cz.cvut.fel.omo.smartHome.model.usable.device.*;
 
@@ -25,7 +25,7 @@ public class FloorBuilder {
                 .withActivities()
                 .withDevices()
                 .withName("Living room")
-                .withSensor(new CrazySensorAdapter(new CrazySenzor(null)))
+                .withSensor(new CrazySensorAdapter(new CrazySensor(null)))
                 .build();
         Room room2 = new RoomBuilder()
                 .withActivities()

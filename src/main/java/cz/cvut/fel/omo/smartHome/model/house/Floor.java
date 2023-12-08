@@ -11,7 +11,7 @@ import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Floor implements RandomActivityFinderComposite{
+public class Floor implements RandomActivityFinderComposite {
     private String name;
     private List<Room> rooms;
     private House house;
@@ -56,10 +56,6 @@ public class Floor implements RandomActivityFinderComposite{
 
     public List<Room> getRooms() {
         return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
     }
 
     public House getHouse() {

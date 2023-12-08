@@ -5,24 +5,24 @@ import cz.cvut.fel.omo.smartHome.model.house.Room;
 import cz.cvut.fel.omo.smartHome.model.usable.device.HeatPump;
 
 public class CrazySensorAdapter implements SensorInterface {
-    private final CrazySenzor crazySenzor;
+    private final CrazySensor crazySensor;
 
-    public CrazySensorAdapter(CrazySenzor crazySenzor) {
-        this.crazySenzor = crazySenzor;
+    public CrazySensorAdapter(CrazySensor crazySensor) {
+        this.crazySensor = crazySensor;
     }
 
     @Override
     public Event measureTemperature() {
-        return crazySenzor.getTeeeeeeemperature();
+        return crazySensor.getTeeeeeeemperature();
     }
 
     @Override
     public void setHeatPump(HeatPump heatPump) {
-        crazySenzor.setCraaaazyHeatPump(heatPump);
+        crazySensor.setCraaaazyHeatPump(heatPump);
     }
 
     @Override
     public void setRoom(Room room) {
-        crazySenzor.setCraaazyRoom(room);
+        crazySensor.setCraaazyRoom(room);
     }
 }

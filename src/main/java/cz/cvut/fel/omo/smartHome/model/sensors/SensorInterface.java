@@ -9,10 +9,10 @@ public interface SensorInterface {
     void setHeatPump(HeatPump heatPump);
     void setRoom(Room room);
     static SensorInterface fromString(String type) {
-        switch (type) {
-            case "Normal sensor": return new NormalSensor(null);
-            case "Crazy sensor": return new CrazySensorAdapter(new CrazySenzor(null));
-            default: throw new RuntimeException("Invalid sensor type.");
-        }
+        return switch (type) {
+            case "Normal sensor" -> new NormalSensor(null);
+            case "Crazy sensor" -> new CrazySensorAdapter(new CrazySensor(null));
+            default -> throw new RuntimeException("Invalid sensor type.");
+        };
     }
 }

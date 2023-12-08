@@ -12,7 +12,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
 public abstract class Device implements Usable {
-    private int lifespan = RandomPicker.getRandomInt(10, 30);
+    private int lifespan = RandomPicker.getRandomInt(10, 40);
     private int electricityConsumption = 100;
     private String documentation = "\"Have you tried turning it OFF and ON?\" ";
     private DeviceState state = new IdleDeviceState(this);
@@ -32,17 +32,17 @@ public abstract class Device implements Usable {
     }
 
     public static Device fromString(String type) {
-        switch (type) {
-            case "Car": return new Car();
-            case "Dish washer": return new Dishwasher();
-            case "Fridge": return new Fridge();
-            case "Laptop": return new Laptop();
-            case "Light bulb": return new LightBulb();
-            case "Phone": return new Phone();
-            case "TV": return new TV();
-            case "Washing machine": return new WashingMachine();
-            default: throw new RuntimeException("Invalid device type.");
-        }
+        return switch (type) {
+            case "Car" -> new Car();
+            case "Dish washer" -> new Dishwasher();
+            case "Fridge" -> new Fridge();
+            case "Laptop" -> new Laptop();
+            case "Light bulb" -> new LightBulb();
+            case "Phone" -> new Phone();
+            case "TV" -> new TV();
+            case "Washing machine" -> new WashingMachine();
+            default -> throw new RuntimeException("Invalid device type.");
+        };
     }
 
     @Override
@@ -58,7 +58,6 @@ public abstract class Device implements Usable {
             if (!isBroken()) {
                 setDeviceToNextState();
             }
-
             return electricityConsumption;
         }
         return state.updateDevice();
@@ -86,7 +85,9 @@ public abstract class Device implements Usable {
         lifespan = RandomPicker.getRandomInt(10,100);
     }
 
-    public void handleEvent(Event event) {}
+    public void handleEvent(Event event) {
+        throw new RuntimeException("Invalid device type!");
+    }
     @Override
     public boolean isBroken() {
         return getState().getClass().equals(BrokenDeviceState.class);

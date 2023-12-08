@@ -9,12 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DeviceIterator implements Iterator {
-    private final House house;
     private List<Device> devices;
     private int currentPos;
 
     public DeviceIterator(House house) {
-        this.house = house;
         devices = initDevices(house);
         currentPos = 0;
     }

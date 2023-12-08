@@ -7,23 +7,23 @@ import cz.cvut.fel.omo.smartHome.model.usable.device.HeatPump;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 
-public class CrazySenzor {
+public class CrazySensor {
     private Room room;
     private HeatPump heatPump;
 
-    public CrazySenzor(Room room) {
+    public CrazySensor(Room room) {
         this.room = room;
     }
 
     public Event getTeeeeeeemperature() {
         int temp = RandomPicker.getRandomInt(15,31);
         if (temp == 15) {
-            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is too cold in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump," heats up " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption raised by 10%");
+            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is crazy cold in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump," heats up " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption raised by 10%");
             Reporter.getInstance().log(event.getDescription());
             return event;
         }
         if (temp == 30) {
-            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is too hot in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump," heats down " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption lowered by 10%");
+            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is crazy hot in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump," heats down " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption lowered by 10%");
             Reporter.getInstance().log(event.getDescription());
             return event;
         }

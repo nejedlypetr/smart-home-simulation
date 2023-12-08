@@ -10,7 +10,7 @@ import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 import java.util.List;
 
 public abstract class Creature {
-    private String name;
+    private final String name;
 
     public Creature(String name) {
         this.name = name;
@@ -41,13 +41,13 @@ public abstract class Creature {
         String name = (String) json.get("name");
         String type = (String) json.get("type");
 
-        switch (type) {
-            case "Adult": return new Adult(name);
-            case "Child": return new Child(name);
-            case "Baby": return new Baby(name);
-            case "Cat": return new Cat(name);
-            case "Dog": return new Dog(name);
-            default: throw new RuntimeException("Invalid creature type.");
-        }
+        return switch (type) {
+            case "Adult" -> new Adult(name);
+            case "Child" -> new Child(name);
+            case "Baby" -> new Baby(name);
+            case "Cat" -> new Cat(name);
+            case "Dog" -> new Dog(name);
+            default -> throw new RuntimeException("Invalid creature type.");
+        };
     }
 }

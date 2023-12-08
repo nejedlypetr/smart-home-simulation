@@ -29,19 +29,12 @@ public class Cat extends Creature {
         Event event;
         int decision = new Random().nextInt(4);
 
-        switch (decision) {
-            case 0:
-                event = new CreatureEvent(this, floor, room, " is hungry.", " is giving food to " + this.getName() + ".");
-                break;
-            case 1:
-                event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
-                break;
-            case 2:
-                event = new CreatureEvent(this, floor, room, " is on a hunger strike.", " is persuading " + this.getName() + " not to be on a hunger strike.");
-                break;
-            default:
-                event = new CreatureEvent(this, floor, room, " needs water.", " is giving water to " + this.getName() + ".");
-        }
+        event = switch (decision) {
+            case 0 -> new CreatureEvent(this, floor, room, " is hungry.", " is giving food to " + this.getName() + ".");
+            case 1 -> new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
+            case 2 -> new CreatureEvent(this, floor, room, " is on a hunger strike.", " is persuading " + this.getName() + " not to be on a hunger strike.");
+            default -> new CreatureEvent(this, floor, room, " needs water.", " is giving water to " + this.getName() + ".");
+        };
 
         Reporter.getInstance().log("\n" + this + " is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
         return event;

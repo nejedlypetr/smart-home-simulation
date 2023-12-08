@@ -28,16 +28,11 @@ public class Baby extends Creature {
         Event event;
         int decision = new Random().nextInt(3);
 
-        switch (decision) {
-            case 0:
-                event = new CreatureEvent(this, floor, room, " is crying.", " is calming down " + this.getName() + ".");
-                break;
-            case 1:
-                event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
-                break;
-            default:
-                event = new CreatureEvent(this, floor, room, " needs milk.", " is giving milk to " + this.getName() + ".");
-        }
+        event = switch (decision) {
+            case 0 -> new CreatureEvent(this, floor, room, " is crying.", " is calming down " + this.getName() + ".");
+            case 1 -> new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
+            default -> new CreatureEvent(this, floor, room, " needs milk.", " is giving milk to " + this.getName() + ".");
+        };
 
         Reporter.getInstance().log("\n" + this + " is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
         return event;

@@ -19,9 +19,4 @@ public class RandomPicker {
         Random random = new Random();
         return random.nextInt(first,last);
     }
-
-    public static int getRandomInt(int last) {
-        Random random = new Random();
-        return random.nextInt(last);
-    }
 }

@@ -5,9 +5,9 @@ import cz.cvut.fel.omo.smartHome.model.house.Floor;
 import cz.cvut.fel.omo.smartHome.model.house.Room;
 
 public abstract class Event {
-    private Room room;
-    private Floor floor;
-    private String description;
+    private final Room room;
+    private final Floor floor;
+    private final String description;
     private final String handleDescription;
 
     public Event(Room room, Floor floor, String description, String handleDescription) {

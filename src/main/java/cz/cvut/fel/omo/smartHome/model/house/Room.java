@@ -12,10 +12,10 @@ import cz.cvut.fel.omo.smartHome.utils.RandomPicker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room implements RandomActivityFinderComposite {
     private String name;
     private List<Activity> activities;
-    private List<Device> devices;
+    private final List<Device> devices;
     private Floor floor;
     private SensorInterface sensor;
 
@@ -54,6 +54,7 @@ public class Room {
                 .build();
     }
 
+    @Override
     public Activity getRandomActivityFor(Creature creature) throws NoValidActivitiesException {
         List<Activity> validActivities = activities
                 .stream()
@@ -73,14 +74,6 @@ public class Room {
         this.name = name;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
-    }
-
     public List<Device> getDevices() {
         return devices;
     }
@@ -91,10 +84,6 @@ public class Room {
 
     public void setFloor(Floor floor) {
         this.floor = floor;
-    }
-
-    public void setSensor(SensorInterface sensor) {
-        this.sensor = sensor;
     }
 
     public SensorInterface getSensor() {

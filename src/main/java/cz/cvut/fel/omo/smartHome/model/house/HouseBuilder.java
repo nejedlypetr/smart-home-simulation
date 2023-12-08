@@ -93,5 +93,4 @@ public class HouseBuilder {
         }
         return house;
     }
-
 }

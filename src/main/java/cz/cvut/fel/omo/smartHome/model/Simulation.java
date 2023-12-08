@@ -13,12 +13,6 @@ public class Simulation {
     private int day;
     private static final String FILE_NAME = "house.json";
 
-    public Simulation(House house) {
-        this.house = house;
-        this.hour = 0;
-        this.day = 1;
-    }
-
     public Simulation() {
         // File configuration
         try {
