@@ -10,6 +10,14 @@ public class Child extends Creature {
         super(name);
     }
 
+    /**
+     * Makes a decision for an entity based on a random choice among DEVICE, SPORT_DEVICE, or ACTIVITY.
+     *
+     * Randomly decides between three options: DEVICE, SPORT_DEVICE, or ACTIVITY.
+     *
+     * @param events The list of events (unused in this decision-making).
+     * @return The decision made, which can be DEVICE, SPORT_DEVICE, or ACTIVITY.
+     */
     @Override
     public Decision makeDecision(List<Event> events) {
         int decision = new Random().nextInt(3);

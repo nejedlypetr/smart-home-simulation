@@ -17,6 +17,15 @@ public abstract class Event {
         this.handleDescription = handleDescription;
     }
 
+    /**
+     * Throws an {@code UnsupportedOperationException} indicating that the method is not implemented in the subclass.
+     *
+     * This method serves as a placeholder and should be overridden in subclasses to provide a meaningful implementation
+     * for handling interactions with creatures.
+     *
+     * @param creature The creature involved in the interaction (unused in this placeholder method).
+     * @throws UnsupportedOperationException Always thrown with a message indicating the lack of implementation.
+     */
     public void handleBy(Creature creature) {
         throw new UnsupportedOperationException("Method is not implemented in the subclass.");
     }

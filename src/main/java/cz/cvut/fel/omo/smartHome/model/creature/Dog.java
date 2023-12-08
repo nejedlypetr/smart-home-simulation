@@ -14,6 +14,14 @@ public class Dog extends Creature {
         super(name);
     }
 
+    /**
+     * Makes a decision for an entity based on a random choice between generating an event and initiating an activity.
+     *
+     * Randomly decides between two options: GENERATE_EVENT or ACTIVITY.
+     *
+     * @param events The list of events (unused in this decision-making).
+     * @return The decision made, which can be GENERATE_EVENT or ACTIVITY.
+     */
     @Override
     public Decision makeDecision(List<Event> events) {
         int decision = new Random().nextInt(2);
@@ -23,6 +31,16 @@ public class Dog extends Creature {
         };
     }
 
+    /**
+     * Generates a random creature event based on a decision for the creature's action in a specific room on a floor.
+     *
+     * Randomly selects an action for the creature, creating a corresponding CreatureEvent.
+     * The possible actions include being hungry, pooping, or wanting to play.
+     *
+     * @param floor The floor where the event occurs.
+     * @param room The room where the event occurs.
+     * @return The generated CreatureEvent representing the creature's action in the specified room.
+     */
     @Override
     public Event generateEvent(Floor floor, Room room) {
         Event event;
