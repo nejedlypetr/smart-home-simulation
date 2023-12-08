@@ -1,15 +1,16 @@
 package cz.cvut.fel.omo.smartHome.reporter;
 
-import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 public class Reporter {
     private static Reporter instance;
-    private Logger logger;
+    private final Logger logger;
+    private ReporterStrategy reporterStrategy;
 
     private Reporter() {
-        logger = Logger.getLogger("");
-        configure();
+        this.logger = Logger.getLogger("");
+        setReporterStrategy(new TerminalReporter());
     }
 
     public static Reporter getInstance() {
@@ -27,32 +28,17 @@ public class Reporter {
         logger.info(msg);
     }
 
-    private void configure() {
+    protected void addHandler(Handler handler) {
+        logger.addHandler(handler);
+    }
+
+    public void setReporterStrategy(ReporterStrategy reporterStrategy) {
         // clear default handlers
         for (Handler handler : logger.getHandlers()) {
             logger.removeHandler(handler);
         }
 
-        // console handler
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setFormatter(new CustomFormatter());
-        logger.addHandler(consoleHandler);
-
-        // file handler
-        try {
-            FileHandler fileHandler = new FileHandler("report.txt");
-            fileHandler.setFormatter(new CustomFormatter());
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.reporterStrategy = reporterStrategy;
+        this.reporterStrategy.configure(this);
     }
-
-    static class CustomFormatter extends Formatter {
-        @Override
-        public String format(LogRecord record) {
-            return record.getMessage();
-        }
-    }
-
 }

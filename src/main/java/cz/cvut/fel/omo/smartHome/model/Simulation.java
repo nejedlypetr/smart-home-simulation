@@ -4,10 +4,14 @@ import cz.cvut.fel.omo.smartHome.model.house.House;
 import cz.cvut.fel.omo.smartHome.model.house.HouseBuilder;
 import cz.cvut.fel.omo.smartHome.reporter.Reporter;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 public class Simulation {
     private House house;
     private int hour;
     private int day;
+    private static final String FILE_NAME = "house.json";
 
     public Simulation(House house) {
         this.house = house;
@@ -16,6 +20,16 @@ public class Simulation {
     }
 
     public Simulation() {
+        // File configuration
+        try {
+            FileReader fileReader = new FileReader(FILE_NAME);
+            this.house = House.configureHouseFromJsonFile(fileReader);
+            return;
+        } catch (FileNotFoundException e) {
+            Reporter.getInstance().log("No house.json configuration file found. A default house configuration loaded.\n");
+        }
+
+        // Default configuration
         this.house = new HouseBuilder()
                         .withPricePerKWh(5.0)
                         .withCreatures()
