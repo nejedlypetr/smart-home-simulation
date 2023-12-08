@@ -23,7 +23,7 @@ public class CrazySenzor {
             return event;
         }
         if (temp == 30) {
-            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is too hot in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump,"heats down " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption lowered by 10%");
+            DeviceEvent event = new DeviceEvent(room, room.getFloor(),"\nIt is too hot in " + room.getName() + " in " + room.getFloor().getName() + ".", heatPump," heats down " + room.getName() + " in " + room.getFloor().getName() + " using Heat Pump. Consumption lowered by 10%");
             Reporter.getInstance().log(event.getDescription());
             return event;
         }

@@ -27,7 +27,7 @@ public class Cat extends Creature {
     @Override
     public Event generateEvent(Floor floor, Room room) {
         Event event;
-        int decision = new Random().nextInt(3);
+        int decision = new Random().nextInt(4);
 
         switch (decision) {
             case 0:
@@ -35,6 +35,9 @@ public class Cat extends Creature {
                 break;
             case 1:
                 event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
+                break;
+            case 2:
+                event = new CreatureEvent(this, floor, room, " is on a hunger strike.", " is persuading " + this.getName() + " not to be on a hunger strike.");
                 break;
             default:
                 event = new CreatureEvent(this, floor, room, " needs water.", " is giving water to " + this.getName() + ".");

@@ -32,6 +32,7 @@ public class HouseBuilder {
                 new Child("Emily"),
                 new Baby("Lily"),
                 new Dog("Alík"),
+                new Dog("Floki"),
                 new Cat("Micka")
         ));
         return this;
@@ -45,6 +46,7 @@ public class HouseBuilder {
     public HouseBuilder withSportEquipments() {
         this.sportEquipments = new ArrayList<>(Arrays.asList(
             new Ski(),
+            new Bicycle(),
             new Bicycle()
         ));
         return this;

@@ -1,8 +1,7 @@
 package cz.cvut.fel.omo.smartHome.model.house;
 
 import cz.cvut.fel.omo.smartHome.model.activity.Activity;
-import cz.cvut.fel.omo.smartHome.model.creature.Baby;
-import cz.cvut.fel.omo.smartHome.model.creature.Creature;
+import cz.cvut.fel.omo.smartHome.model.creature.*;
 import cz.cvut.fel.omo.smartHome.model.sensors.SensorInterface;
 import cz.cvut.fel.omo.smartHome.model.usable.device.*;
 
@@ -45,7 +44,15 @@ public class RoomBuilder {
         this.activities = new ArrayList<>(Arrays.asList(
             new Activity(" is sleeping. ", Creature.class),
             new Activity(" is eating. ", Creature.class),
-            new Activity(" is crying. ", Baby.class)
+            new Activity(" is thinking about the future of this family.", Adult.class),
+            new Activity(" is dancing. ", Child.class),
+            new Activity(" is thinking about Design patterns. ", Child.class),
+            new Activity(" is barking happily. ", Dog.class),
+            new Activity(" is meowing happily. ", Cat.class),
+            new Activity(" is hiding. ", Baby.class),
+            new Activity(" is hiding. ", Dog.class),
+            new Activity(" is hiding. ", Cat.class),
+            new Activity(" is giggling. ", Baby.class)
         ));
         return this;
     }
@@ -55,11 +62,8 @@ public class RoomBuilder {
                 new TV(),
                 new Laptop(),
                 new Fridge(),
-                new Dishwasher(),
-                new WashingMachine(),
                 new Phone(),
-                new LightBulb(),
-                new Car()
+                new LightBulb()
         ));
         return this;
     }

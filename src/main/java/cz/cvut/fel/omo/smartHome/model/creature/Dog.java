@@ -36,7 +36,7 @@ public class Dog extends Creature {
                 event = new CreatureEvent(this, floor, room, " is pooping everywhere.", " is cleaning up " + this.getName() + "'s poops.");
                 break;
             default:
-                event = new CreatureEvent(this, floor, room, " wants to go out on a walk.", " is walking " + this.getName() + ".");
+                event = new CreatureEvent(this, floor, room, " wants to play with someone.", " is playing with " + this.getName() + ".");
         }
 
         Reporter.getInstance().log("\n" + this + " is in " + room.getName() + " in " + floor.getName() + ". " + getName() + event.getDescription());
